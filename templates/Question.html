@@ -6,7 +6,6 @@
 </head>
 <body>
 <h1>{{ page.heading }}</h1>
-<h1>{{ page.number }}</h1>
 <b>{{ page.text }}</b>
 <form action="/poll/next_page" method="post">
      {% csrf_token %}
@@ -20,6 +19,13 @@
             <label><input type="text"  name= "{{ question.id }}"></label>
 
         {% elif question.type == "SimpleQuestionWithOneAnswer" %}
+            <fieldset>
+            {% for option in question.options %}
+                <label><input type="radio"  name= "{{ question.id }}" value="{{ option.text }}">{{ option.text }}</label>
+            {% endfor %}
+            </fieldset>
+
+        {% elif question.type == "LanguageChoosing" %}
             <fieldset>
             {% for option in question.options %}
                 <label><input type="radio"  name= "{{ question.id }}" value="{{ option.text }}">{{ option.text }}</label>

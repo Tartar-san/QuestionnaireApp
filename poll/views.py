@@ -8,7 +8,7 @@ import random
 
 
 def skip_not_needed_pages(respondent):
-    page = Page.objects.get(page_number=respondent.page)
+    page = Page.objects.get(number=respondent.page)
     conditions = Condition.objects.filter(page=page)
 
     # check if all of conditions are met. if not - skip page
@@ -21,7 +21,7 @@ def skip_not_needed_pages(respondent):
 
         answers = Answer.objects.filter(respondent=respondent,
                                         question=condition.option.question,
-                                        option=option_text)
+                                        text=option_text)
         if len(answers) == 0:
             respondent.page += 1
             respondent.save()
@@ -32,12 +32,18 @@ def skip_not_needed_pages(respondent):
 
 def get_context(respondent):
     # get information from database
-    db_page = Page.objects.get(page_number=respondent.page)
+    db_page = Page.objects.get(number=respondent.page)
     db_videos = Video.objects.filter(page=db_page)
     db_questions = Question.objects.filter(page=db_page)
     # prepare information for template
-    template_page = TemplatePage(db_page, respondent)
-    template_video = TemplatePage(random.choice(db_videos))
+    template_page = TemplatePage(db_page, respondent.language)
+
+    if (len(db_videos) > 0):
+        template_video = TemplatePage(random.choice(db_videos))
+    else:
+        template_video = None
+
+
     template_questions = []
     # here we prepare questions and options for it
     for db_question in db_questions:
@@ -47,11 +53,14 @@ def get_context(respondent):
 
     context = {
         "page": template_page,
-        "questions": template_questions,
-        "video": template_video,
     }
 
-    return context, template_page.type
+    if (db_page.type in ["Question"]):
+        context["questions"] = template_questions
+    if (db_page.type in ["Video"]):
+        context["video"] = template_video
+
+    return context, db_page.type
 
 
 def get_page(request):
@@ -70,6 +79,9 @@ def get_page(request):
 
     context, page_type = get_context(respondent)
 
+    print(context)
+    print(context["page"].title)
+
     if (page_type == "Starting"):
         return render(request, "Starting.html", context=context)
     elif (page_type == "Login"):
@@ -86,26 +98,31 @@ def get_page(request):
 
 def post_answer(request):
     respondent = get_object_or_404(Respondent, identity=request.COOKIES["sessionid"])
-    try:
-        page = Page.objects.get(page_number=respondent.page)
-        questions = Question.objects.filter(page=page)
-        # one page could contain several questions
-        for question in questions:
-            # some questions could have several answers
-            user_answer = request.POST.getlist(str(question.id))
-            for option in user_answer:
-                # allow user to choose preferred language
-                if (question.type=="LanguageChoosing"):
-                    respondent.language = {"Русский": "RU", "Українська": "UA"}[option]
+    #try:
+    page = Page.objects.get(number=respondent.page)
+    print(page.number)
+    questions = Question.objects.filter(page=page)
+    print(questions)
+    # one page could contain several questions
+    for question in questions:
+        # some questions could have several answers
+        user_answer = request.POST.getlist(str(question.id))
+        print(user_answer)
+        for option in user_answer:
+            # allow user to choose preferred language
+            print(option)
+            if (question.type=="LanguageChoosing"):
+                respondent.language = {"Русский": "RU", "Українська": "UA"}[option]
 
-                # save answer in database
-                db_answer = Answer(respondent=respondent, question=question, option=option)
-                db_answer.save()
 
-        respondent.page += 1
-        respondent.save()
-        return HttpResponseRedirect('/poll/')
-    except:
-        return server_error(request)
+            # save answer in database
+            db_answer = Answer(respondent=respondent, question=question, text=option)
+            db_answer.save()
+
+    respondent.page += 1
+    respondent.save()
+    return HttpResponseRedirect('/poll/')
+    #except:
+    #    return server_error(request)
 
 
