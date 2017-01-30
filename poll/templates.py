@@ -37,4 +37,11 @@ class TemplatePage:
             self.heading = page.ru_heading
             self.text = page.ru_text
 
+        self.type = page.type
         self.number = page.number
+
+class TemplateVideo:
+
+    def __init__(self, video):
+
+        self.url = video.url
