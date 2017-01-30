@@ -14,12 +14,22 @@ class TemplateQuestion:
         self.text = question.question_text
         self.options = options
 
+
 def skip_not_needed_pages(respondent):
-    pass
+    page = Page.objects.get(page_number=respondent.page)
+    conditions = Condition.objects.filter(page=page)
+
+    for condition in conditions:
+        answers = Answer.objects.filter(respondent=respondent, question=condition.option.question, option=condition.option.option_text)
+        if len(answers) == 0:
+            respondent.page += 1
+            respondent.save()
+            return True
+
+    return False
 
 
 def get_page(request):
-
 
     try:
         respondent = Respondent.objects.get(identity=request.COOKIES["sessionid"])
@@ -29,7 +39,9 @@ def get_page(request):
         respondent = Respondent(identity=request.COOKIES["sessionid"], page=1)
         respondent.save()
 
-    skip_not_needed_questions(respondent)
+    while skip_not_needed_pages(respondent):
+        pass
+
     needed_page = Page.objects.get(page_number=respondent.page)
 
     if (needed_page.page_type == "Video"):

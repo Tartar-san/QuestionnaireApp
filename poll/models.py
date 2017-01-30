@@ -58,8 +58,13 @@ class Option(models.Model):
 
 
 class Respondent(models.Model):
-     identity = models.CharField(max_length=50, primary_key=True)
-     page = models.IntegerField(default=0)
+    LANGUAGES = (
+        ("UA", "Ukrainian"),
+        ("RU", "Russian"),
+    )
+    identity = models.CharField(max_length=50, primary_key=True)
+    language = models.CharField(max_length=20, choices=LANGUAGES, default="UA")
+    page = models.IntegerField(default=0)
 
 
 class Condition(models.Model):
