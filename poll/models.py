@@ -16,6 +16,7 @@ class Page(models.Model):
         ("Lottery", "Lottery")
     )
 
+    # important field. defines order of pages
     number = models.IntegerField(default=0)
     type = models.CharField(max_length=50, choices=PAGE_TYPES)
     ua_title = models.CharField(max_length=50)
@@ -36,7 +37,8 @@ class Question(models.Model):
         ("SimpleQuestionWithOneAnswer", "SimpleQuestionWithOneAnswer"),
         ("SimpleQuestionWithSeveralAnswers", "SimpleQuestionWithSeveralAnswers"),
         ("TableQuestion", "TableQuestion"),
-        ("QuestionWithOptionsAndUserAnswer", "QuestionWithOptionsAndUserAnswer")
+        ("QuestionWithOptionsAndUserAnswer", "QuestionWithOptionsAndUserAnswer"),
+        ("LanguageChoosing", "LanguageChoosing")
     )
 
     type = models.CharField(max_length=50, choices=QUESTION_TYPES)
