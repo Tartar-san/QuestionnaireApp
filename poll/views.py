@@ -1,18 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect, HttpResponse
-from .models import Question, Respondent, Answer, Option, Page, Video, Condition
+from django.http import HttpResponseRedirect
+from .models import *
+from .templates import *
 import random
-from django.urls import reverse
 # Create your views here.
 
-class TemplateQuestion:
-
-    def __init__(self, question, options):
-        self.id = question.id
-        self.heading = question.question_heading
-        self.type = question.question_type
-        self.text = question.question_text
-        self.options = options
 
 
 def skip_not_needed_pages(respondent):
@@ -42,42 +34,16 @@ def get_page(request):
     while skip_not_needed_pages(respondent):
         pass
 
-    needed_page = Page.objects.get(page_number=respondent.page)
-
-    if (needed_page.page_type == "Video"):
-        videos = Video.objects.filter(page=needed_page)
-        video = random.choice(videos).video_url
-        return render(request, 'Video.html', context={
-            "page" : needed_page,
-            "video_url" : video,
-        })
-    elif (needed_page.page_type == "Starting"):
-        return render(request, "Greetings.html", context={
-            "page" : needed_page,
-        })
-    elif (needed_page.page_type == "Login"):
-        return render(request, "Login.html", context={
-            "page": needed_page,
-        })
-    elif (needed_page.page_type == "Question"):
-
-        questions_set = Question.objects.filter(page=needed_page)
-
-        questions_for_templates = []
-
-        for question in questions_set:
-            options_set = Option.objects.filter(question=question)
-            questions_for_templates.append(TemplateQuestion(question, options_set))
-
-        context = {
-            "page" : needed_page,
-            "questions" : questions_for_templates,
-        }
-
-        return render(request, 'Question.html', context=context)
+    db_page = Page.objects.get(page_number=respondent.page)
+    db_videos = Video.objects.filter(page=db_page)
+    db_questions = Question.objects.filter(page=db_page)
 
 
-def answer(request):
+
+
+
+
+def post_answer(request):
     respondent = get_object_or_404(Respondent, identity=request.COOKIES["sessionid"])
     try:
         page = Page.objects.get(page_number=respondent.page)
@@ -89,6 +55,9 @@ def answer(request):
             user_answer = request.POST.getlist(str(question.id))
             print(user_answer)
             for option in user_answer:
+                if (option=="Русский"):
+                    respondent.language = "RU"
+                    respondent.save()
                 db_answer = Answer(respondent=respondent, question=question, option=option)
                 db_answer.save()
     finally:

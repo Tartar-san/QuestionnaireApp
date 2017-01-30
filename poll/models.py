@@ -4,8 +4,7 @@ from django.db import models
 
 
 class Questionnaire(models.Model):
-    questionnaire_name = models.CharField(max_length=50)
-    pub_date = models.DateTimeField()
+    name = models.CharField(max_length=50)
 
 
 class Page(models.Model):
@@ -17,19 +16,18 @@ class Page(models.Model):
         ("Lottery", "Lottery")
     )
 
-    page_number = models.IntegerField(default=0)
-    page_type = models.CharField(max_length=50, choices=PAGE_TYPES)
-    ua_page_title = models.CharField(max_length=50)
-    ru_page_title = models.CharField(max_length=50)
-    ua_page_heading = models.CharField(max_length=200, blank=True)
-    ru_page_heading = models.CharField(max_length=200, blank=True)
-    ua_page_text = models.CharField(max_length=2000, blank=True)
-    ru_page_text = models.CharField(max_length=2000, blank=True)
+    number = models.IntegerField(default=0)
+    type = models.CharField(max_length=50, choices=PAGE_TYPES)
+    ua_title = models.CharField(max_length=50)
+    ru_title = models.CharField(max_length=50)
+    ua_heading = models.CharField(max_length=200, blank=True)
+    ru_heading = models.CharField(max_length=200, blank=True)
+    ua_text = models.CharField(max_length=2000, blank=True)
+    ru_text = models.CharField(max_length=2000, blank=True)
     questionnaire = models.ForeignKey(Questionnaire)
-    pub_date = models.DateTimeField()
 
     def __str__(self):
-        return "Page №" + str(self.page_number) + " Title: " + self.page_title
+        return "Page №" + str(self.number) + " Title: " + self.ua_title
 
 
 class Question(models.Model):
@@ -41,25 +39,25 @@ class Question(models.Model):
         ("QuestionWithOptionsAndUserAnswer", "QuestionWithOptionsAndUserAnswer")
     )
 
-    question_number = models.IntegerField(default=0)
-    question_type = models.CharField(max_length=50, choices=QUESTION_TYPES)
-    ua_question_heading = models.CharField(max_length=200)
-    ru_question_heading = models.CharField(max_length=200)
-    ua_question_text = models.CharField(max_length=500, blank=True)
-    ru_question_text = models.CharField(max_length=500, blank=True)
+    type = models.CharField(max_length=50, choices=QUESTION_TYPES)
+    ua_heading = models.CharField(max_length=200)
+    ru_heading = models.CharField(max_length=200)
+    ua_text = models.CharField(max_length=500, blank=True)
+    ru_text = models.CharField(max_length=500, blank=True)
     page = models.ForeignKey(Page)
     pub_date = models.DateTimeField()
 
     def __str__(self):
-        return self.question_type + " " + self.question_heading
+        return self.type + " " + self.ua_heading
 
 
 class Option(models.Model):
     question = models.ForeignKey(Question)
-    option_text = models.CharField(max_length=50)
+    ua_text = models.CharField(max_length=50)
+    ru_text = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.option_text
+        return self.ua_text
 
 
 class Respondent(models.Model):
@@ -80,11 +78,11 @@ class Condition(models.Model):
 class Answer(models.Model):
     respondent = models.ForeignKey(Respondent)
     question = models.ForeignKey(Question)
-    option = models.CharField(max_length=200)
+    text = models.CharField(max_length=200)
 
 
 class Video(models.Model):
     page = models.ForeignKey(Page)
-    video_url = models.CharField(max_length=200)
+    url = models.CharField(max_length=200)
 
 
