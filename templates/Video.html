@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ page.page_title }}</title>
+    <title>{{ page.title }}</title>
 </head>
 <body>
-<h1>{{ page.page_heading }}</h1>
-<h1>{{ page.page_number }}</h1>
-<b>{{ page.page_text }}</b>
+<h1>{{ page.heading }}</h1>
+<h1>{{ page.number }}</h1>
+<b>{{ page.text }}</b>
 <video>
-    <source src="{{ video_url }}">
+    <source src="{{ video.url }}">
 </video>
 <form action="/poll/next_page" method="post">
     {% csrf_token %}

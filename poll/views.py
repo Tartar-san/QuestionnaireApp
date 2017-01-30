@@ -13,9 +13,15 @@ def skip_not_needed_pages(respondent):
 
     # check if all of conditions are met. if not - skip page
     for condition in conditions:
+        # if respondent chose some language then his answers in this language
+        if (respondent.language == "RU"):
+            option_text = condition.option.ru_text
+        elif (respondent.language == "UA"):
+            option_text = condition.option.ua_text
+
         answers = Answer.objects.filter(respondent=respondent,
                                         question=condition.option.question,
-                                        option=condition.option.option_text)
+                                        option=option_text)
         if len(answers) == 0:
             respondent.page += 1
             respondent.save()
