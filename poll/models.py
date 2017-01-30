@@ -19,9 +19,12 @@ class Page(models.Model):
 
     page_number = models.IntegerField(default=0)
     page_type = models.CharField(max_length=50, choices=PAGE_TYPES)
-    page_title = models.CharField(max_length=50)
-    page_heading = models.CharField(max_length=200, blank=True)
-    page_text = models.CharField(max_length=2000, blank=True)
+    ua_page_title = models.CharField(max_length=50)
+    ru_page_title = models.CharField(max_length=50)
+    ua_page_heading = models.CharField(max_length=200, blank=True)
+    ru_page_heading = models.CharField(max_length=200, blank=True)
+    ua_page_text = models.CharField(max_length=2000, blank=True)
+    ru_page_text = models.CharField(max_length=2000, blank=True)
     questionnaire = models.ForeignKey(Questionnaire)
     pub_date = models.DateTimeField()
 
@@ -40,8 +43,10 @@ class Question(models.Model):
 
     question_number = models.IntegerField(default=0)
     question_type = models.CharField(max_length=50, choices=QUESTION_TYPES)
-    question_heading = models.CharField(max_length=200)
-    question_text = models.CharField(max_length=500, blank=True)
+    ua_question_heading = models.CharField(max_length=200)
+    ru_question_heading = models.CharField(max_length=200)
+    ua_question_text = models.CharField(max_length=500, blank=True)
+    ru_question_text = models.CharField(max_length=500, blank=True)
     page = models.ForeignKey(Page)
     pub_date = models.DateTimeField()
 
