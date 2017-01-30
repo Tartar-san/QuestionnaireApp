@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ page.page_title }}</title>
+</head>
+<body>
+<h1>{{ page.page_heading }}</h1>
+<h1>{{ page.page_number }}</h1>
+<b>{{ page.page_text }}</b>
+<form action="/poll/next_page" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Прийняти участь в опитуванні">
+</form>
+</body>
+</html>
