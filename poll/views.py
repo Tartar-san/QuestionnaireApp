@@ -103,6 +103,9 @@ def post_answer(request):
     print(page.number)
     questions = Question.objects.filter(page=page)
     print(questions)
+    # save lottery number
+    if (page.type == "Lottery"):
+        respondent.lottery_number = request.POST["lottery"]
     # one page could contain several questions
     for question in questions:
         # some questions could have several answers
@@ -113,6 +116,8 @@ def post_answer(request):
             print(option)
             if (question.type=="LanguageChoosing"):
                 respondent.language = {"Русский": "RU", "Українська": "UA"}[option]
+
+
 
 
             # save answer in database

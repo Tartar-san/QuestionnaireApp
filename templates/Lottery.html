@@ -2,9 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ page.title }}</title>
 </head>
 <body>
+<h1>{{ page.heading }}</h1>
+{{ page.text }}
+<form action="/poll/next_page" method="post">
+    {% csrf_token %}
+    <input type="text" name="lottery">
+    <input type="submit" value="Відіслати лотерейний номер">
+</form>
 
 </body>
 </html>
