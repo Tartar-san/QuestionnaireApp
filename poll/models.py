@@ -31,8 +31,8 @@ class Page(models.Model):
     questionnaire = models.ForeignKey(Questionnaire)
 
     def __str__(self):
-        return "Questionnaire: " + str(self.questionnaire)  + "Page №" \
-               + str(self.number)  + " Title: " + self.ua_title
+        return "Questionnaire: " + str(self.questionnaire)  + "|||  Page №" \
+               + str(self.number)  + "||| Title: " + self.ua_title
 
 
 class Question(models.Model):
@@ -54,7 +54,8 @@ class Question(models.Model):
     pub_date = models.DateTimeField()
 
     def __str__(self):
-        return str(self.page) + self.type + " " + self.ua_heading
+        return str(self.page) + "||| Type of question: " + self.type \
+               + "||| Heading:  " + self.ua_heading
 
 
 class Option(models.Model):
@@ -63,7 +64,7 @@ class Option(models.Model):
     ru_text = models.CharField(max_length=50)
 
     def __str__(self):
-        return str(self.question) + self.ua_text
+        return str(self.question) + "||| Option: " + self.ua_text
 
 
 class Respondent(models.Model):
@@ -96,7 +97,8 @@ class Answer(models.Model):
     text = models.CharField(max_length=200)
 
     def __str__(self):
-        return "Respondent: " + self.respondent.identity + " Answer: " + self.text
+        return "Respondent: " + self.respondent.identity \
+               + " Answer: " + self.text
 
 
 class Video(models.Model):
