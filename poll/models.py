@@ -6,6 +6,9 @@ from django.db import models
 class Questionnaire(models.Model):
     name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.name
+
 
 class Page(models.Model):
     PAGE_TYPES = (
@@ -28,7 +31,8 @@ class Page(models.Model):
     questionnaire = models.ForeignKey(Questionnaire)
 
     def __str__(self):
-        return "Page №" + str(self.number) + " Title: " + self.ua_title
+        return "Questionnaire: " + str(self.questionnaire)  + "Page №" \
+               + str(self.number)  + " Title: " + self.ua_title
 
 
 class Question(models.Model):
@@ -72,10 +76,18 @@ class Respondent(models.Model):
     lottery_number = models.CharField(max_length=10, default="")
     page = models.IntegerField(default=0)
 
+    def __str__(self):
+        return "Identity: " + self.identity \
+               + " Language: " + self.language
+
 
 class Condition(models.Model):
     page = models.ForeignKey(Page)
     option = models.ForeignKey(Option)
+
+    def __str__(self):
+        return "Show: " + str(self.page) \
+               + " If: " + str(self.option)
 
 
 class Answer(models.Model):
@@ -83,9 +95,16 @@ class Answer(models.Model):
     question = models.ForeignKey(Question)
     text = models.CharField(max_length=200)
 
+    def __str__(self):
+        return "Respondent: " + self.respondent.identity + " Answer: " + self.text
+
 
 class Video(models.Model):
+    key_name = models.CharField(max_length=200)
     page = models.ForeignKey(Page)
     url = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.key_name
 
 
