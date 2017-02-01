@@ -96,6 +96,10 @@ def get_page(request):
         return page_not_found(request)
 
 
+def get_initial_page(request):
+    return render(request, "InitialPage.html")
+
+
 def post_answer(request):
     respondent = get_object_or_404(Respondent, identity=request.COOKIES["sessionid"])
     #try:
@@ -126,7 +130,7 @@ def post_answer(request):
 
     respondent.page += 1
     respondent.save()
-    return HttpResponseRedirect('/poll/')
+    return HttpResponseRedirect('/poll/question/')
     #except:
     #    return server_error(request)
 
