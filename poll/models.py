@@ -54,7 +54,7 @@ class Question(models.Model):
     pub_date = models.DateTimeField()
 
     def __str__(self):
-        return self.type + " " + self.ua_heading
+        return str(self.page) + self.type + " " + self.ua_heading
 
 
 class Option(models.Model):
@@ -63,7 +63,7 @@ class Option(models.Model):
     ru_text = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.ua_text
+        return str(self.question) + self.ua_text
 
 
 class Respondent(models.Model):
