@@ -16,7 +16,8 @@ class Page(models.Model):
         ("Video", "Video"),
         ("Starting", "Starting"),
         ("Login", "Login"),
-        ("Lottery", "Lottery")
+        ("Lottery", "Lottery"),
+        ("FinalPage", "FinalPage")
     )
 
     # important field. defines order of pages
