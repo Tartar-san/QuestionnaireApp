@@ -39,6 +39,7 @@ class TemplatePage:
 
         self.type = page.type
         self.number = page.number
+        self.language = language
 
 class TemplateVideo:
 

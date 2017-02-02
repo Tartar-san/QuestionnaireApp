@@ -65,12 +65,15 @@ def get_context(respondent):
 
 def get_page(request):
 
+    if (request.session.session_key is None):
+        request.session.save()
+
     try:
         # try to get this respondent information
-        respondent = Respondent.objects.get(identity=request.COOKIES["sessionid"])
+        respondent = Respondent.objects.get(identity=request.session.session_key)
     except:
         # create session in db
-        respondent = Respondent(identity=request.COOKIES["sessionid"], page=1)
+        respondent = Respondent(identity=request.session.session_key, page=1)
         respondent.save()
 
     # skip pages until the one respondent should see
@@ -78,9 +81,6 @@ def get_page(request):
         pass
 
     context, page_type = get_context(respondent)
-
-    print(context)
-    print(context["page"].title)
 
     if (page_type == "Starting"):
         return render(request, "Starting.html", context=context)
@@ -96,17 +96,11 @@ def get_page(request):
         return page_not_found(request)
 
 
-def get_initial_page(request):
-    return render(request, "InitialPage.html")
-
-
 def post_answer(request):
-    respondent = get_object_or_404(Respondent, identity=request.COOKIES["sessionid"])
+    respondent = get_object_or_404(Respondent, identity=request.session.session_key)
     #try:
     page = Page.objects.get(number=respondent.page)
-    print(page.number)
     questions = Question.objects.filter(page=page)
-    print(questions)
     # save lottery number
     if (page.type == "Lottery"):
         respondent.lottery_number = request.POST["lottery"]
@@ -114,15 +108,10 @@ def post_answer(request):
     for question in questions:
         # some questions could have several answers
         user_answer = request.POST.getlist(str(question.id))
-        print(user_answer)
         for option in user_answer:
             # allow user to choose preferred language
-            print(option)
             if (question.type=="LanguageChoosing"):
                 respondent.language = {"Русский": "RU", "Українська": "UA"}[option]
-
-
-
 
             # save answer in database
             db_answer = Answer(respondent=respondent, question=question, text=option)
@@ -130,7 +119,7 @@ def post_answer(request):
 
     respondent.page += 1
     respondent.save()
-    return HttpResponseRedirect('/poll/question/')
+    return HttpResponseRedirect('/poll/')
     #except:
     #    return server_error(request)
 

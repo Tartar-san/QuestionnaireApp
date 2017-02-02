@@ -31,8 +31,7 @@ class Page(models.Model):
     questionnaire = models.ForeignKey(Questionnaire)
 
     def __str__(self):
-        return "Questionnaire: " + str(self.questionnaire)  + "|||  Page №" \
-               + str(self.number)  + "||| Title: " + self.ua_title
+        return "Questionnaire: " + str(self.questionnaire) + "|||  Page number: " + str(self.number)
 
 
 class Question(models.Model):
@@ -45,6 +44,7 @@ class Question(models.Model):
         ("LanguageChoosing", "LanguageChoosing")
     )
 
+    number = models.IntegerField(default=0)
     type = models.CharField(max_length=50, choices=QUESTION_TYPES)
     ua_heading = models.CharField(max_length=200)
     ru_heading = models.CharField(max_length=200)
@@ -54,8 +54,7 @@ class Question(models.Model):
     pub_date = models.DateTimeField()
 
     def __str__(self):
-        return str(self.page) + "||| Type of question: " + self.type \
-               + "||| Heading:  " + self.ua_heading
+        return str(self.page) + "||| Question number: " + str(self.number)
 
 
 class Option(models.Model):
