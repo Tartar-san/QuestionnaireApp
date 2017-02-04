@@ -25,7 +25,9 @@ SECRET_KEY = 'e#jy9ma1i^)nbuafp2e*or_vv(s*x!cnbaf0s!phksg))b4@)k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'tartarsan.pythonanywhere.com',
+]
 
 
 # Application definition
