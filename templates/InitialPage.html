@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../poll/css/normalize.css">
+
+    <title>Some title</title>
+</head>
+<body>
+<form action="/poll/question" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Почати">
+</form>
+</body>
+</html>
