@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.defaults import page_not_found, permission_denied, server_error
 from django.http import HttpResponseRedirect
+from django.conf import settings
 from .models import *
 from .templates import *
+from .google_spreadsheet_extractor import SpreadSheetUpdater
 import random
+import os
 # Create your views here.
-
+spreadsheet_updater = SpreadSheetUpdater(filename=os.path.join(settings.STATICFILES_DIRS[0], 'poll/client_secret.json'))
 
 def skip_not_needed_pages(respondent):
     page = Page.objects.get(number=respondent.page)
@@ -75,6 +78,8 @@ def get_page(request):
         # create session in db
         respondent = Respondent(identity=request.session.session_key, page=1)
         respondent.save()
+        spreadsheet_updater.add_respondent(respondent.spreadsheet_row)
+
 
     # skip pages until the one respondent should see
     while skip_not_needed_pages(respondent):
@@ -110,6 +115,7 @@ def post_answer(request):
     for question in questions:
         # some questions could have several answers
         user_answer = request.POST.getlist(str(question.id))
+        spreadsheet_updater.add_answer(user_answer, question.id, respondent.spreadsheet_row)
         for option in user_answer:
             # allow user to choose preferred language
             if (question.type=="LanguageChoosing"):

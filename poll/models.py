@@ -73,10 +73,11 @@ class Respondent(models.Model):
         ("UA", "Ukrainian"),
         ("RU", "Russian"),
     )
-    identity = models.CharField(max_length=50, primary_key=True)
+    identity = models.CharField(max_length=50)
     language = models.CharField(max_length=20, choices=LANGUAGES, default="UA")
     lottery_number = models.CharField(max_length=10, default="")
     page = models.IntegerField(default=0)
+    spreadsheet_row = models.AutoField(primary_key=True)
 
     def __str__(self):
         return "Identity: " + self.identity \
