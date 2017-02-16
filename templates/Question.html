@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html
         {% if page.language == "RU" %}
-                        lang="ru"
-                   {% elif  page.language == "UA" %}
-                        lang ="uk"
-                   {% endif %}
-        >
+            lang="ru"
+        {% elif  page.language == "UA" %}
+            lang="uk"
+        {% endif %}
+
+>
 
 
 <head>
@@ -14,268 +15,272 @@
     <meta charset="UTF-8">
     <title>{{ page.title }}</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'poll/normalize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'poll/css/normalize.css' %}">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'poll/css/styles.css' %}">
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="{% static 'poll/scripts/questions.js' %}"></script>
+
+
 </head>
-<body>
-<script type="text/javascript">
-$(document).ready(function () {
-     $('.option-radio-lang').first().attr('required', '');
-     $('.option-radio').first().attr('required', '');
-       $('.option-input:checkbox').first().attr('required', '');
-        $('.option-radio-lang').first().attr('oninvalid', "this.setCustomValidity('Виберіть мову \ Выберите язык')");
 
-        setLangMessage();
+<body class="bodyStyle">
 
-         $('#mainForm').submit(function() {
-
-             if(!isInputsChecked()) return false;
-
-             if(!$('#mainForm')[0].checkValidity())return false;
-
-         });
-
-});
-function setLangMessage() {
-    var userLang = $("html").attr("lang");// navigator.language || navigator.userLanguage;
-       switch(userLang){
-           case 'uk':
-                $('.option-radio').first().attr('oninvalid', "this.setCustomValidity('Виберіть відповідь')");
-                 $('.option-input:checkbox').first().attr('oninvalid', "this.setCustomValidity('Виберіть відповідь')");
-               break;
-           case 'ru':
-                $('.option-radio').first().attr('oninvalid', "this.setCustomValidity('Выберите ответ')");
-                 $('.option-input:checkbox').first().attr('oninvalid', "this.setCustomValidity('Выберите ответ')");
-               break;
-           default:
-               break;
-       }
-}
-function isInputsChecked(){
-     var isCheckBoxExist = $('.option-input:checkbox').length,
-       checked =  $('.option-input:checkbox:checked').length > 0;
-     return !isCheckBoxExist || checked;
-}
-
-  function toggleInvalidReset(className, reset) {
-      if (isInputsChecked() || $(className).first().attr('oninvalid') !== "this.setCustomValidity('')") {
-          $(className).first().attr('oninvalid', "this.setCustomValidity('')");
-      } else {
-          setLangMessage();
-      }
-  }
-   function toggleRequired(className) {
-      if (isInputsChecked()) {
-          $(className).first().removeAttr('required');
-
-      } else {
-          $(className).first().attr('required', '');
-      }
-  }
-</script>
+<div class="container">
+    <div class="jumbotron" style=" background-color: #B4D2D7; ">
 
 
-<h1>{{ page.heading }}</h1>
+        <h1 class="page-heading">{{ page.heading }}</h1>
 
 
-<b>{{ page.text }}</b>
+        <p class="page-text">{{ page.text }}</p>
 
 
-<form id="mainForm" action="/poll/next_page" method="post">
-     {% csrf_token %}
-<ul>
-    {% for question in questions %}
-        <li>
+        <form id="mainForm" action="/poll/next_page" method="post">
+            {% csrf_token %}
+            <ul>
+                {% for question in questions %}
+                    <li class="question-text">
 
-        {{ question.heading }}
+                        {{ question.heading }}
+                    </li>
 
-            {{ question.text }}
+                    <li>
 
-        {% if question.type == "SimpleOpenQuestion" %}
-            <label>
-            <input type="text"
-                   name= "{{ question.id }}"
-                   id="respondentText"
-                   required
-
-                   {% if page.language == "RU" %}
-                        oninvalid="this.setCustomValidity('Введите текст ответа в это поле')"
-                        placeholder="Ваш ответ"
-                   {% elif  page.language == "UA" %}
-                        oninvalid="this.setCustomValidity('Введіть текст відповіді в дане поле')"
-                        placeholder="Ваша відповідь"
-                   {% endif %}
-                   oninput="setCustomValidity('')"  />
-            </label>
-
-        {% elif question.type == "SimpleQuestionWithOneAnswer" %}
-            <fieldset>
-            {% for option in question.options %}
-                <label>
-
-                    <input type="radio"
-                           class="option-radio"
-                           name= "{{ question.id }}"
-                           value="{{ option.text }}"
-                           onclick="toggleInvalidReset('.option-radio', true);toggleRequired('.option-radio');"
-                    >
-
-                    {{ option.text }}
-
-                </label>
-            {% endfor %}
-            </fieldset>
-
-        {% elif question.type == "LanguageChoosing" %}
-            <fieldset>
-            {% for option in question.options %}
-                <label>
-                    <input type="radio"
-                           class="option-radio-lang"
-                           name= "{{ question.id }}"
-                           value="{{ option.text }}"
-                           onclick="toggleInvalidReset('.option-radio-lang', true);
-                           toggleRequired('.option-radio-lang');"
-                    >
-
-                    {{ option.text }}
-
-                </label>
-            {% endfor %}
-            </fieldset>
-
-        {% elif question.type == "SimpleQuestionWithSeveralAnswers" %}
-            <fieldset aria-multiselectable="true">
-            {% for option in question.options %}
-                <label>
-                    <input type="checkbox" class="option-input"
-                           name="{{ question.id }}"
-                           value="{{ option.text }}"
-                           onclick="toggleInvalidReset('.option-input:checkbox'); toggleRequired('.option-input:checkbox');"
-                    >
-                    {{ option.text }}
-
-                </label>
-            {% endfor %}
-            </fieldset>
-
-        {% elif question.type == "TableQuestion" %}
-            <fieldset>
-         {% for option in question.options %}
-                <label>
-                    <input type="radio"
-                           class="option-radio-lang"
-                           name= "{{ question.id }}"
-                           value="{{ option.text }}"
-                            onclick="toggleInvalidReset('.option-radio-lang', true);
-                            toggleRequired('.option-radio-lang');"
-
-                    >
-
-                    {{ option.text }}
-
-                </label>
-         {% endfor %}
-            </fieldset>
-
-
-
-            {% elif question.type == "DateTimeChoosing" %}
-
-            <form>
-
-                <br>
-
-                <label>
-
-                    <br>
-                    <p align="center">
                         {{ question.text }}
-                    <input type="date"
-                            class="option-radio-lang"
-                           name= "{{ page.id }}"
-                            max="2010-01-02"
-                           required
-                           min="1950-12-31"
-                           onclick="toggleInvalidReset('.option-radio-lang', true);
-                            toggleRequired('.option-radio-lang');"
-                    >
-                    </p>
-
-                </label>
+                    </li>
 
 
-            </form>
+                    <li>
+                        {% if question.type == "SimpleOpenQuestion" %}
+                            <label>
+                                <input type="text"
+                                       name="{{ question.id }}"
+                                       id="respondentText"
+                                       class="customTextField"
+                                       required
+
+                                        {% if page.language == "RU" %}
+                                       oninvalid="this.setCustomValidity('Введите текст ответа в это поле')"
+                                       placeholder="Ваш ответ"
+                                        {% elif  page.language == "UA" %}
+                                       oninvalid="this.setCustomValidity('Введіть текст відповіді в дане поле')"
+                                       placeholder="Ваша відповідь"
+                                        {% endif %}
+                                       oninput="setCustomValidity('')"
+                                       onkeypress="this.style.width = ((this.value.length + 1) * 15) + 'px';"
+                                >
+                            </label>
+
+                        {% elif question.type == "SimpleQuestionWithOneAnswer" %}
+                            <fieldset>
+                                {% for option in question.options %}
+                                    <br>
+                                    <label>
+
+                                        <input type="radio"
+                                               class="option-radio"
+                                               name="{{ question.id }}"
+                                               value="{{ option.text }}"
+                                               onclick="toggleInvalidReset('.option-radio', true);toggleRequired('.option-radio');"
+                                        >
+
+                                        {{ option.text }}
+
+                                    </label>
+                                {% endfor %}
+                            </fieldset>
+
+                        {% elif question.type == "LanguageChoosing" %}
+                            <fieldset>
+                                {% for option in question.options %}
+                                    <label>
+                                        <input type="radio"
+                                               class="option-radio-lang"
+                                               name="{{ question.id }}"
+                                               value="{{ option.text }}"
+                                               onclick="toggleInvalidReset('.option-radio-lang', true);
+                           toggleRequired('.option-radio-lang');"
+                                        >
+
+                                        {{ option.text }}
+
+                                    </label>
+                                {% endfor %}
+                            </fieldset>
+
+                        {% elif question.type == "SimpleQuestionWithSeveralAnswers" %}
+                            <fieldset aria-multiselectable="true">
+                                {% for option in question.options %}
+                                    <br>
+                                    <label>
+                                        <input type="checkbox" class="option-input"
+                                               name="{{ question.id }}"
+                                               value="{{ option.text }}"
+                                               onclick="toggleInvalidReset('.option-input:checkbox'); toggleRequired('.option-input:checkbox');"
+                                        >
+                                        {{ option.text }}
+
+                                    </label>
+                                {% endfor %}
+                            </fieldset>
+
+                        {% elif question.type == "TableQuestion" %}
+                            <fieldset class="tableContainer">
+                                {% for option in question.options %}
+
+                                    <label>
+
+                                        <input type="radio"
+                                               class="option-radio{{ question.id }}"
+                                               name="{{ question.id }}"
+                                               value="{{ option.text }}"
+                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
+
+                                        >
+
+                                        {{ option.text }}
+
+                                    </label>
+                                    <br>
+                                {% endfor %}
+                            </fieldset>
+
+
+
+                        {% elif question.type == "DateTimeChoosing" %}
+
+                            <form>
+
+                                <br>
+
+                                <label>
+
+                                    <br>
+                                    <p align="center">
+                                        {{ question.text }}
+
+
+                                        <input type="date"
+                                               lang="ru"
+                                               class="option-radio"
+                                               name="{{ page.id }}"
+                                               max="2010-01-02"
+                                               required
+                                               min="1950-12-31"
+                                               onclick="toggleInvalidReset('.option-radio', true);toggleRequired('.option-radio');"
+                                        >
+                                    </p>
+
+                                </label>
+
+
+                            </form>
 
 
 
 
-        {% elif question.type == "QuestionWithOptionsAndUserAnswer" %}
-            <fieldset>
-         {% for option in question.options %}
-                <label>
-                    <input type="radio"
-                            class="option-radio-lang"
-                           name= "{{ question.id }}"
-                           value="{{ option.text }}"
-                     onclick="toggleInvalidReset('.option-radio-lang', true);
-                            toggleRequired('.option-radio-lang');"
-                    >
-
-                    {{ option.text }}
-
-                </label>
-         {% endfor %}
-
-            <label>
-                <br>
-                Інше:
-                <input type="text"  name= "{{ question.id }}">
-            </label>
-
-            </fieldset>
+                        {% elif question.type == "QuestionWithOptionsAndUserAnswer" %}
+                            <fieldset>
+                                {% for option in question.options %}
+                                    <label>
 
 
-            {% elif question.type == "DummyAnwer(OLD)" %}
-            <fieldset>
-         {% for option in question.options %}
-                <label>
-                    <input type="radio"
-                           name= "{{ question.id }}"
-                           value="{{ option.text }}"
-                    {% if page.language == "RU" %}
-                        oninvalid="this.setCustomValidity('Выберите ответ')"
-                   {% elif  page.language == "UA" %}
-                        oninvalid="this.setCustomValidity('Виберіть відповідь')"
-                   {% endif %}
-                    >
+                                        <input type="radio"
+                                               class="option-radio"
+                                               name="{{ question.id }}"
+                                               value="{{ option.text }}"
+                                               onclick="toggleInvalidReset('.option-radio', true);toggleRequired('.option-radio');"
+                                        >
 
-                    {{ option.text }}
+                                        {{ option.text }}
 
-                </label>
-         {% endfor %}
+                                    </label>
+                                    <br>
 
-            <label>
-                Інше
-                <input type="text"  name= "{{ question.id }}">
-            </label>
+                                {% endfor %}
 
-            </fieldset>
+                                <label>
+
+                                    {% if page.language == "RU" %}
+                                        Другое:
+                                    {% elif  page.language == "UA" %}
+                                        Інше:
+                                    {% endif %}
 
 
+                                    <input type="text"
+                                           name="{{ question.id }}"
+
+                                           class="customTextField"
+                                           onkeypress="this.style.width = ((this.value.length + 1) * 15) + 'px';"
+                                    >
+                                </label>
+
+                            </fieldset>
 
 
-        {% endif %}
+                        {% elif question.type == "DummyAnwer(OLD)" %}
+                            <fieldset>
+                                {% for option in question.options %}
+                                    <label>
+                                        <input type="radio"
+                                               name="{{ question.id }}"
+                                               value="{{ option.text }}"
+                                                {% if page.language == "RU" %}
+                                               oninvalid="this.setCustomValidity('Выберите ответ')"
+                                                {% elif  page.language == "UA" %}
+                                               oninvalid="this.setCustomValidity('Виберіть відповідь')"
+                                                {% endif %}
+                                        >
+
+                                        {{ option.text }}
+
+                                    </label>
+                                {% endfor %}
+
+                                <label>
+                                    Інше
+                                    <input type="text" name="{{ question.id }}">
+                                </label>
+
+                            </fieldset>
 
 
 
 
+                        {% endif %}
 
-        </li>
-    {% endfor %}
-</ul>
 
-    <input id="submitBtn" type="submit" value="Відповісти" onclick=" $('#mainForm').submit();" >
-</form>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div style="text-align: center">
+                <input id="submitBtn"
+                       type="submit"
+                       class="btn"
+
+                        {% if page.language == "UA" %}
+                       value="Відповісти "
+                        {% elif  page.language == "RU" %}
+                       value="Ответить"
+                        {% endif %}
+                       onclick=" $('#mainForm').submit();">
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
 </body>
 </html>

@@ -1,15 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
+
+
+<html
+        {% if page.language == "RU" %}
+                        lang="ru"
+                   {% elif  page.language == "UA" %}
+                        lang ="uk"
+                   {% endif %}
+        >
+
+
 <head>
     <meta charset="UTF-8">
     <title>{{ page.title }}</title>
+
+        {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'poll/css/normalize.css' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'poll/css/bootstrap-social.css' %}">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script  type="text/javascript" src="{% static 'poll/scripts/loginPage.js' %}"> </script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'poll/css/styles.css' %}">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+
+
 </head>
-<body>
-<h1>{{ page.heading }}</h1>
-<b>{{ page.text }}</b>
+
+
+<body class="bodyStyle">
+<style>
+    .btn-facebook:hover{
+        background-color: #365899   !important;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+</style>
+
+
+<div class="container">
+    <div class="jumbotron" style=" background-color: #B4D2D7; ">
+
+
+
+{#<script>#}
+{#  window.fbAsyncInit = function() {#}
+{#    FB.init({#}
+{#      appId      : 'your-app-id',#}
+{#      xfbml      : true,#}
+{#      version    : 'v2.8'#}
+{#    });#}
+{#    FB.AppEvents.logPageView();#}
+{#  };#}
+{##}
+{#  (function(d, s, id){#}
+{#     var js, fjs = d.getElementsByTagName(s)[0];#}
+{#     if (d.getElementById(id)) {return;}#}
+{#     js = d.createElement(s); js.id = id;#}
+{#     js.src = "//connect.facebook.net/en_US/sdk.js";#}
+{#     fjs.parentNode.insertBefore(js, fjs);#}
+{#   }(document, 'script', 'facebook-jssdk'));#}
+{##}
+{#  FB.Event.subscribe('edge.create', function () {#}
+{#      alert("Like has been clicked");#}
+{#  })#}
+{#</script>#}
+
+
+<div id="fb-root"></div>
+
+<script>
+   window.fbAsyncInit = function() {
+       FB.init({
+           appId:"1793789240943817",
+           xfbml: true,
+           version: 'v2.8'
+       });
+       FB.AppEvents.logPageView();
+       FB.Event.subscribe('edge.create', function (response) {
+           setCookiesLikeTrue();
+       });
+   };
+
+
+
+  (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+           {% if page.language == "UA" %}
+  js.src = "//connect.facebook.net/uk_UA/sdk.js"
+                   {% elif  page.language == "RU" %}
+
+  js.src = "//connect.facebook.net/ru_RU/sdk.js"
+                   {% endif %}
+  fjs.parentNode.insertBefore(js, fjs);
+  }
+  (document, 'script', 'facebook-jssdk'));
+
+</script>
+
+
+
+
+<h1 class="page-heading">{{ page.heading }}</h1>
+<p class="page-text">{{ page.text }}</p>
 <form action="/poll/next_page" method="post">
     {% csrf_token %}
-    <input type="submit" value="далі">
+<div style="text-align: center">
+
+    <div class="fb-like"
+         data-href="https://www.facebook.com/atlantynespisuyut/"
+         data-layout="button_count"
+         data-action="like"
+         data-size="large"
+         data-show-faces="false"
+         data-share="false">
+    </div>
+
+
+
+
+<a  id="facebookCustomShareBtn1" class="btn-sm btn-social btn-facebook"
+    style=" margin-top:-10px;
+    font-size: 12px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+    font-weight: bold;
+     background-color: #4267B2;"
+    onclick="shareFBonClick()"
+>
+    <span class="fa fa-facebook"></span>
+
+           {% if page.language == "UA" %}
+               Поділитись на Facebook
+                   {% elif  page.language == "RU" %}
+               Поделиться на Facebook
+                   {% endif %}
+  </a>
+
+
+<br>
+<br>
+    <input
+            type="submit"
+            class="btn"
+
+           {% if page.language == "UA" %}
+            value="Далі"
+                   {% elif  page.language == "RU" %}
+
+            value="Дальше"
+                   {% endif %}
+           >
+</div>
+
+
+
 </form>
+    </div>
+</div>
 </body>
 </html>

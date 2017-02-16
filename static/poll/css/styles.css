@@ -1,0 +1,74 @@
+input, form, .btn {
+    font-size: 24px
+}
+
+input[type="radio"], input[type="checkbox"] {
+    transform: scale(1.5);
+    margin: 0 5px 10px 15px;
+}
+
+
+.customTextField{
+    background-color: #CBDFE3;
+    border: none;
+    border-bottom: thin;
+    border-bottom-style: ridge;
+    border-bottom-color: #1c2d3f;
+    width: 40%;
+    min-width: 40%;
+    max-width: 100%;
+
+}
+
+
+body{
+    background-color: #B4D2D7;
+}
+
+
+label{
+    width:  100%;
+}
+
+.btn {
+    opacity: 0.8;
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #132423;
+    color:white;
+}
+
+.btn:hover {
+    opacity: 1;
+    font-weight: bold;
+    color:white;
+}
+
+ul {
+    list-style-type: none;
+    padding-bottom: 20px;
+    max-width: none;
+}
+
+.question-heading {
+    font-size: 36px;
+    font-weight: bold
+}
+
+h1.page-heading {
+    font-size: 36px;
+    font-weight: bold
+}
+
+p.page-text {
+    font-size: 22px;
+    font-style: italic;
+    margin-bottom: 30px
+}
+
+.question-text {
+    font-size: 32px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+}
