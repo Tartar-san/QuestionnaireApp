@@ -115,7 +115,8 @@ def post_answer(request):
     for question in questions:
         # some questions could have several answers
         user_answer = request.POST.getlist(str(question.id))
-        spreadsheet_updater.add_answer(user_answer, question.id, respondent.spreadsheet_row)
+        print(question.id)
+        spreadsheet_updater.add_answer(str(user_answer), question.id, respondent.spreadsheet_row)
         for option in user_answer:
             # allow user to choose preferred language
             if (question.type=="LanguageChoosing"):

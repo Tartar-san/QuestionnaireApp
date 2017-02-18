@@ -56,7 +56,7 @@ class Question(models.Model):
     pub_date = models.DateTimeField()
 
     def __str__(self):
-        return str(self.page) + "||| Question number: " + str(self.number)
+        return str(self.page) + "||| Question number: " + str(self.number) + " " + str(self.id)
 
 
 class Option(models.Model):

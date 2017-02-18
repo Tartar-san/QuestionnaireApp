@@ -1,5 +1,6 @@
 import gspread
 import threading
+from .models import Question
 from oauth2client.service_account import ServiceAccountCredentials
 
 
@@ -22,12 +23,14 @@ class SpreadSheetUpdater:
         self.spreadsheet = gc.open("Антикорупційне опитування")
         self.worksheet = self.spreadsheet.get_worksheet(0)
 
-        #questions = Question.objects.all().order_by('number')
+        questions = Question.objects.all().order_by('number')
+        self.ids_order = [question.id for question in questions]
 
-        #for i in range(len(questions)):
-        #    if (self.worksheet.col_count == i+1):
-        #        self.worksheet.add_cols(1)
-        #    self._add_question(i+1, questions[i].ua_heading)
+        for i in range(len(questions)):
+            if (self.worksheet.col_count == i+1):
+                self.worksheet.add_cols(1)
+            self._add_question(i+1, questions[i].ua_heading)
+
 
     @threaded
     def add_respondent(self, respondent_id):
@@ -37,10 +40,12 @@ class SpreadSheetUpdater:
 
     @threaded
     def add_answer(self, answer_text, question_id, respondent_id):
-        self.worksheet.update_cell(row=respondent_id+1, col=question_id+1, val=answer_text)
+        column = self.ids_order.index(question_id) + 2
+        self.worksheet.update_cell(row=respondent_id+1, col=column, val=answer_text)
 
     @threaded
     def _add_question(self, question_id, question_text):
+        #if and number of the question are not the same
         self.worksheet.update_cell(row=1, col=question_id+1, val=question_text)
 
 #wks.share('tarasov@ucu.edu.ua', perm_type='user', role='writer')
