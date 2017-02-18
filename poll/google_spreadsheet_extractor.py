@@ -1,6 +1,14 @@
 import gspread
-from .models import Question
+import threading
 from oauth2client.service_account import ServiceAccountCredentials
+
+
+def threaded(fn):
+    def wrapper(*args, **kwargs):
+        thread = threading.Thread(target=fn, args=args, kwargs=kwargs)
+        thread.start()
+        return thread
+    return wrapper
 
 class SpreadSheetUpdater:
 
@@ -21,14 +29,17 @@ class SpreadSheetUpdater:
         #        self.worksheet.add_cols(1)
         #    self._add_question(i+1, questions[i].ua_heading)
 
+    @threaded
     def add_respondent(self, respondent_id):
         if (respondent_id+1 == self.worksheet.row_count):
             self.worksheet.add_rows(1)
         self.worksheet.update_cell(row=respondent_id+1, col=1, val=str(respondent_id))
 
+    @threaded
     def add_answer(self, answer_text, question_id, respondent_id):
         self.worksheet.update_cell(row=respondent_id+1, col=question_id+1, val=answer_text)
 
+    @threaded
     def _add_question(self, question_id, question_text):
         self.worksheet.update_cell(row=1, col=question_id+1, val=question_text)
 
