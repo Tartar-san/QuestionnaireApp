@@ -5,6 +5,7 @@ from django.conf import settings
 from .models import *
 from .templates import *
 from .google_spreadsheet_extractor import SpreadSheetUpdater
+from .forms import FormWithCaptcha
 import random
 import os
 # Create your views here.
@@ -111,6 +112,10 @@ def post_answer(request):
     # save lottery number
     if (page.type == "Lottery"):
         respondent.lottery_number = request.POST["lottery"]
+    if (page.type == "Starting"):
+        form = FormWithCaptcha(request.POST)
+        if not form.is_valid():
+            return HttpResponseRedirect('/poll/')
     # one page could contain several questions
     for question in questions:
         # some questions could have several answers

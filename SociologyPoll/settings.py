@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'poll',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     ]
 
+RECAPTCHA_PUBLIC_KEY = '6LfHLhcUAAAAAEH1NuJybm-PXYi4mgc2b5kOyn75'
+RECAPTCHA_PRIVATE_KEY = '6LfHLhcUAAAAAJ3Uifxte-Lusf_eLIU-xp3JF9Ji'
