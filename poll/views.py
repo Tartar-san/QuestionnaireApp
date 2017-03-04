@@ -39,6 +39,7 @@ def get_context(respondent):
     db_page = Page.objects.get(number=respondent.page)
     db_videos = Video.objects.filter(page=db_page)
     db_questions = Question.objects.filter(page=db_page)
+
     # prepare information for template
     template_page = TemplatePage(db_page, respondent.language)
 
@@ -53,13 +54,14 @@ def get_context(respondent):
     for db_question in db_questions:
         db_options = Option.objects.filter(question=db_question)
         template_options = [TemplateOption(db_option, respondent.language) for db_option in db_options]
+        print(template_options)
         template_questions.append(TemplateQuestion(db_question, template_options, respondent.language))
 
     context = {
         "page": template_page,
     }
 
-    if (db_page.type in ["Question"]):
+    if (db_page.type in ["Question", "Lottery"]):
         context["questions"] = template_questions
     if (db_page.type in ["Video"]):
         context["video"] = template_video
@@ -97,7 +99,7 @@ def get_page(request):
     elif (page_type == "Video"):
         return render(request, "Video.html", context=context)
     elif (page_type == "Lottery"):
-        return render(request, "Lottery.html", context=context)
+        return render(request, "Question.html", context=context)
     elif (page_type == "FinalPage"):
         return render(request, "FinalPage.html", context=context)
     else:
@@ -109,13 +111,11 @@ def post_answer(request):
     #try:
     page = Page.objects.get(number=respondent.page)
     questions = Question.objects.filter(page=page)
-    # save lottery number
-    if (page.type == "Lottery"):
-        respondent.lottery_number = request.POST["lottery"]
-    if (page.type == "Starting"):
-        form = FormWithCaptcha(request.POST)
-        if not form.is_valid():
-            return HttpResponseRedirect('/poll/')
+
+    #if (page.type == "Starting"):
+    #    form = FormWithCaptcha(request.POST)
+    #    if not form.is_valid():
+    #        return HttpResponseRedirect('/poll/')
     # one page could contain several questions
     for question in questions:
         # some questions could have several answers

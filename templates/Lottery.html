@@ -22,12 +22,59 @@
 <div class="container">
     <div class="jumbotron" style=" background-color: #B4D2D7; ">
 
+
         <h1 class="page-heading">{{ page.heading }}</h1>
         <p class="page-text">{{ page.text }} </p>
         <form action="/poll/next_page" method="post">
             {% csrf_token %}
-            <input type="text" name="lottery" class="customTextField">
-            <input type="submit" value="Відіслати лотерейний номер" class="btn">
+            <ul>
+                {% for question in questions %}
+                    <li class="question-text">
+
+                        {{ question.heading }}
+                    </li>
+
+                    <li>
+
+                        {{ question.text }}
+                    </li>
+
+
+                    <li>
+                        {% if question.type == "SimpleOpenQuestion" %}
+                            <label>
+                                <input type="text"
+                                       name="{{ question.id }}"
+                                       id="respondentText"
+                                       class="customTextField"
+                                       required
+
+                                        {% if page.language == "RU" %}
+                                       oninvalid="this.setCustomValidity('Введите текст ответа в это поле')"
+                                       placeholder="Ваш ответ"
+                                        {% elif  page.language == "UA" %}
+                                       oninvalid="this.setCustomValidity('Введіть текст відповіді в дане поле')"
+                                       placeholder="Ваша відповідь"
+                                        {% endif %}
+                                       oninput="setCustomValidity('')"
+                                       onkeypress="this.style.width = ((this.value.length + 1) * 15) + 'px';"
+                                >
+                            </label>
+                    {% endif %}
+            {% endfor %}
+                </ul>
+            <div style="text-align: center">
+                <input id="submitBtn"
+                       type="submit"
+                       class="btn"
+
+                        {% if page.language == "UA" %}
+                       value="Відповісти "
+                        {% elif  page.language == "RU" %}
+                       value="Ответить"
+                        {% endif %}
+                       onclick=" $('#mainForm').submit();">
+            </div>
         </form>
 
     </div>
