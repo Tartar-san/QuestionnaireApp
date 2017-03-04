@@ -111,25 +111,36 @@ def post_answer(request):
     #try:
     page = Page.objects.get(number=respondent.page)
     questions = Question.objects.filter(page=page)
+    if (page.type == "Login"):
+        text_like = request.COOKIES["Like"]
+        question_like = questions.get(ua_heading="Лайкнув")
+        answer_like = Answer(respondent=respondent,
+                             question=question_like,
+                             text=text_like)
+        answer_like.save()
+        spreadsheet_updater.add_answer(str(text_like), question_like.id, respondent.spreadsheet_row)
 
+
+        #shared = request.POST["Shared"] == "true"
+    else:
     #if (page.type == "Starting"):
     #    form = FormWithCaptcha(request.POST)
     #    if not form.is_valid():
     #        return HttpResponseRedirect('/poll/')
     # one page could contain several questions
-    for question in questions:
-        # some questions could have several answers
-        user_answer = request.POST.getlist(str(question.id))
-        print(question.id)
-        spreadsheet_updater.add_answer(str(user_answer), question.id, respondent.spreadsheet_row)
-        for option in user_answer:
-            # allow user to choose preferred language
-            if (question.type=="LanguageChoosing"):
-                respondent.language = {"Русский": "RU", "Українська": "UA"}[option]
+        for question in questions:
+         # some questions could have several answers
+            user_answer = request.POST.getlist(str(question.id))
+            print(question.id)
+            spreadsheet_updater.add_answer(str(user_answer), question.id, respondent.spreadsheet_row)
+            for option in user_answer:
+                # allow user to choose preferred language
+                if (question.type=="LanguageChoosing"):
+                    respondent.language = {"Русский": "RU", "Українська": "UA"}[option]
 
-            # save answer in database
-            db_answer = Answer(respondent=respondent, question=question, text=option)
-            db_answer.save()
+                # save answer in database
+                db_answer = Answer(respondent=respondent, question=question, text=option)
+                db_answer.save()
 
     respondent.page += 1
     respondent.save()
