@@ -27,7 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'tartarsan.pythonanywhere.com',
-    '127.0.0.1'
+    '127.0.0.1',
+    '188.166.9.29',
+    'studentintegrity.org',
 ]
 
 

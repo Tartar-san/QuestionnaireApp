@@ -46,3 +46,4 @@ class TemplateVideo:
     def __init__(self, video):
 
         self.url = video.url
+        self.key_name = video.key_name

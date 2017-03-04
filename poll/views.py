@@ -44,7 +44,7 @@ def get_context(respondent):
     template_page = TemplatePage(db_page, respondent.language)
 
     if (len(db_videos) > 0):
-        template_video = TemplatePage(random.choice(db_videos))
+        template_video = TemplateVideo(random.choice(db_videos))
     else:
         template_video = None
 
@@ -65,6 +65,14 @@ def get_context(respondent):
         context["questions"] = template_questions
     if (db_page.type in ["Video"]):
         context["video"] = template_video
+
+        video_answer = Answer(question=db_questions.get(number=171),
+                              respondent=respondent,
+                              text=template_video.url)
+        video_answer.save()
+        spreadsheet_updater.add_answer(template_video.key_name,
+                                       db_questions.get(number=171).id,
+                                       respondent.spreadsheet_row)
 
     return context, db_page.type
 

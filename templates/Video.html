@@ -28,9 +28,8 @@
     <div class="jumbotron" style=" background-color: #B4D2D7; ">
         <h1 class="">{{ page.heading }}</h1>
         <p>{{ page.text }}</p>
-        <video>
-            <source src="{{ video.url }}">
-        </video>
+
+        <iframe width="560" height="315" src="{{ video.url }}" frameborder="0" allowfullscreen></iframe>
 
 
         <form action="/poll/next_page" method="post">
