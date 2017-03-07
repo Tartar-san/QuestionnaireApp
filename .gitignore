@@ -1,3 +1,4 @@
 /django
 */__pycache__/
 /poll/migrations/__pycache__/
+/db.sqlite3
