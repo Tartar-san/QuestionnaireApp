@@ -1,0 +1,3 @@
+/django
+*/__pycache__/
+/poll/migrations/__pycache__/
