@@ -39,7 +39,7 @@
             <div style="text-align: center">
                 <input type="submit" value="Прийняти участь в опитуванні" class="btn">
                 <div style="background: url({% static 'poll/imgs/atlant.png' %}) no-repeat center center fixed;">
-                <div class="g-recaptcha" data-sitekey="6LcePAATAAAAAGPRWgx90814DTjgt5sXnNbV5WaW"></div>
+                {{ captcha_form }}
                 </div>
             </div>
         </form>
