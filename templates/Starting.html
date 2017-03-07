@@ -17,6 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
+    <script src='https://www.google.com/recaptcha/api.js?hl=uk'></script>
 
     <script type="text/javascript" src="{% static 'poll/scripts/questions.js' %}"></script>
 
@@ -38,7 +39,7 @@
             <div style="text-align: center">
                 <input type="submit" value="Прийняти участь в опитуванні" class="btn">
                 <div style="background: url({% static 'poll/imgs/atlant.png' %}) no-repeat center center fixed;">
-
+                <div class="g-recaptcha" data-sitekey="6LcePAATAAAAAGPRWgx90814DTjgt5sXnNbV5WaW"></div>
                 </div>
             </div>
         </form>
