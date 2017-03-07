@@ -63,6 +63,8 @@ def get_context(respondent):
 
     if (db_page.type in ["Question", "Lottery"]):
         context["questions"] = template_questions
+    if (db_page.type in ["Starting"]):
+        context["captcha_form"] = FormWithCaptcha()
     if (db_page.type in ["Video"]):
         context["video"] = template_video
 
@@ -131,10 +133,10 @@ def post_answer(request):
 
         #shared = request.POST["Shared"] == "true"
     else:
-    #if (page.type == "Starting"):
-    #    form = FormWithCaptcha(request.POST)
-    #    if not form.is_valid():
-    #        return HttpResponseRedirect('/poll/')
+        if (page.type == "Starting"):
+            form = FormWithCaptcha(request.POST)
+            if not form.is_valid():
+                return HttpResponseRedirect('/poll/')
     # one page could contain several questions
         for question in questions:
          # some questions could have several answers
