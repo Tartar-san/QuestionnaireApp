@@ -38,7 +38,7 @@ def get_context(respondent):
     # get information from database
     db_page = Page.objects.get(number=respondent.page)
     db_videos = Video.objects.filter(page=db_page)
-    db_questions = Question.objects.filter(page=db_page)
+    db_questions = Question.objects.filter(page=db_page).order_by('number')
 
     # prepare information for template
     template_page = TemplatePage(db_page, respondent.language)
