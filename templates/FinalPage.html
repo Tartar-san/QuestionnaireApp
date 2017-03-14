@@ -17,8 +17,17 @@
 
     <script type="text/javascript" src="{% static 'poll/scripts/questions.js' %}"></script>
 </head>
-<body>
+<body class="bodyStyle">
+
+<div class="container">
  <div class="jumbotron" style=" background-color: #B4D2D7; ">
+
+     <h1 class="page-heading">{{ page.heading }}</h1>
+
+
+        <p class="page-text">{{ page.text }}</p>
+
+ </div>
  </div>
 </body>
 </html>

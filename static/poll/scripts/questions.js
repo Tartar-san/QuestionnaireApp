@@ -5,7 +5,9 @@ $(document).ready(function () {
 
      $('.option-radio-lang').first().attr('required', '');
      $('.option-radio').first().attr('required', '');
-       $('.option-input:checkbox').first().attr('required', '');
+       $('input:checkbox').attr('required', '');
+
+
         $('.option-radio-lang').first().attr('oninvalid', "this.setCustomValidity('Виберіть мову / Выберите язык')");
 
        var langChoosing =  $('.option-radio-lang');
@@ -14,21 +16,21 @@ $(document).ready(function () {
        }
 
 
-        var tableContainers = $(".tableContainer");
+        var radioContainers = $(".radioContainer");
 
 
  var userLang = $("html").attr("lang");// navigator.language || navigator.userLanguage;
-        for(var i = 0; i< tableContainers.length ;  i++ ){
-            tableContainers[i].children[0].children[0].required=true;
+        for(var i = 0; i< radioContainers.length ;  i++ ){
+            radioContainers[i].children[0].children[0].required=true;
 
 
        switch(userLang){
            case 'uk':
-                 tableContainers[i].children[0].children[0].setAttribute("oninvalid", "this.setCustomValidity('Виберіть відповідь')" );
+                 radioContainers[i].children[0].children[0].setAttribute("oninvalid", "this.setCustomValidity('Виберіть відповідь')" );
                  //attr('oninvalid', "this.setCustomValidity('Виберіть відповідь')");
                  break;
            case 'ru':
-               tableContainers[i].children[0].children[0].setAttribute("oninvalid", "this.setCustomValidity('Выберите ответ')" );
+               radioContainers[i].children[0].children[0].setAttribute("oninvalid", "this.setCustomValidity('Выберите ответ')" );
 
                break;
            default:
@@ -40,6 +42,7 @@ $(document).ready(function () {
 
 
         setLangMessage();
+
 
          $('#mainForm').submit(function() {
 
@@ -87,12 +90,12 @@ function setLangMessage(className) {
        switch(userLang){
            case 'uk':
                 $('.option-radio').first().attr('oninvalid', "this.setCustomValidity('Виберіть відповідь')");
-                 $('.option-input:checkbox').first().attr('oninvalid', "this.setCustomValidity('Виберіть відповідь')");
+                 $('input:checkbox').attr('oninvalid', "this.setCustomValidity('Виберіть відповідь')");
                  $(className).first().attr('oninvalid', "this.setCustomValidity('Виберіть відповідь')");
                break;
            case 'ru':
                 $('.option-radio').first().attr('oninvalid', "this.setCustomValidity('Выберите ответ')");
-                 $('.option-input:checkbox').first().attr('oninvalid', "this.setCustomValidity('Выберите ответ')");
+                 $('input:checkbox').attr('oninvalid', "this.setCustomValidity('Выберите ответ')");
                  $(className).first().attr('oninvalid', "this.setCustomValidity(('Выберите ответ')");
                break;
            default:
@@ -101,8 +104,26 @@ function setLangMessage(className) {
 }
 
 
+function checkboxFamilyOnclick(className) {
+    if ($(className +':checkbox:checked').length > 0){
+        $(className).removeAttr('required');
+        $(className).attr('oninvalid', "this.setCustomValidity('')");
+    }
+    else{
+        $(className).attr('required', '');
+        setLangMessage(className);
+    }
+}
+
+function isInputsChecked2(className){
+     var checked =  $(className + ':checkbox:checked').length > 0;
+     return checked;
+}
+
+
+
 function isInputsChecked(){
-     var isCheckBoxExist = $('.option-input:checkbox').length,
+     var isCheckBoxExist = $('.option-input:checkbox').length > 0,
        checked =  $('.option-input:checkbox:checked').length > 0;
      return !isCheckBoxExist || checked;
 }
