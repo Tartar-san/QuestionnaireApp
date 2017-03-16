@@ -47,6 +47,7 @@
             {% csrf_token %}
             <ul>
                 {% for question in questions %}
+                    {% if question.type != "TableQuestion" %}
                     <li class="question-text">
 
                         {{ question.heading }}
@@ -56,6 +57,7 @@
 
                         {{ question.text }}
                     </li>
+                    {% endif %}
 
 
                     <li>
@@ -132,8 +134,16 @@
                                 {% endfor %}
                             </fieldset>
 
-                        {% elif question.type == "TableQuestion" %}
-                            <fieldset class="tableContainer">
+                        {% elif question.type in  "TableQuestion" %}
+                             <li class="question-text">
+
+                                    {{ question.heading }}
+                             </li>
+                             <li>
+                                   {{ question.text }}
+                            </li>
+
+                            <fieldset class="tableContainer{{ question.id }}">
                                 {% for option in question.options %}
 
                                     <label>
@@ -154,7 +164,26 @@
                             </fieldset>
 
 
+                        {% elif question.type == "TableHeadingQuestion" %}
+                            <fieldset class="tableContainer{{ question.id }}">
+                                {% for option in question.options %}
 
+                                    <label>
+
+                                        <input type="radio"
+                                               class="option-radio{{ question.id }}"
+                                               name="{{ question.id }}"
+                                               value="{{ option.text }}"
+                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
+
+                                        >
+
+                                        {{ option.text }}
+
+                                    </label>
+                                    <br>
+                                {% endfor %}
+                            </fieldset>
                         {% elif question.type == "DateTimeChoosing" %}
 
                             <form>

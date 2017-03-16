@@ -135,8 +135,8 @@ def post_answer(request):
     else:
         if (page.type == "Starting"):
             form = FormWithCaptcha(request.POST)
-            if not form.is_valid():
-                return HttpResponseRedirect('/poll/')
+            #if not form.is_valid():
+            #    return HttpResponseRedirect('/poll/')
     # one page could contain several questions
         for question in questions:
          # some questions could have several answers
