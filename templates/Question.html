@@ -80,19 +80,17 @@
                             </label>
 
                         {% elif question.type == "SimpleQuestionWithOneAnswer" %}
-                            <fieldset class="radioContainer">
+                            <fieldset>
                                 {% for option in question.options %}
-
+                                    <br>
                                     <label>
 
                                         <input type="radio"
-                                               class="option-radio{{ question.id }}"
+                                               class="option-radio"
                                                name="{{ question.id }}"
                                                value="{{ option.text }}"
-                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
-
+                                               onclick="toggleInvalidReset('.option-radio', true);toggleRequired('.option-radio');"
                                         >
-
 
                                         {{ option.text }}
 
@@ -123,11 +121,10 @@
                                 {% for option in question.options %}
                                     <br>
                                     <label>
-                                        <input type="checkbox" class="option-input{{ question.id }}"
+                                        <input type="checkbox" class="option-input"
                                                name="{{ question.id }}"
                                                value="{{ option.text }}"
-                                               onclick="checkboxFamilyOnclick('.option-input{{ question.id }}');"
-
+                                               onclick="toggleInvalidReset('.option-input:checkbox'); toggleRequired('.option-input:checkbox');"
                                         >
                                         {{ option.text }}
 
@@ -136,12 +133,10 @@
                             </fieldset>
 
                         {% elif question.type == "TableQuestion" %}
-                            <fieldset class="radioContainer">
+                            <fieldset class="tableContainer">
                                 {% for option in question.options %}
 
                                     <label>
-
-
 
                                         <input type="radio"
                                                class="option-radio{{ question.id }}"
@@ -193,16 +188,16 @@
 
 
                         {% elif question.type == "QuestionWithOptionsAndUserAnswer" %}
-                            <fieldset class="radioContainer">
+                            <fieldset>
                                 {% for option in question.options %}
                                     <label>
 
 
                                         <input type="radio"
-                                               class="option-radio{{ question.id }}"
+                                               class="option-radio"
                                                name="{{ question.id }}"
                                                value="{{ option.text }}"
-                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
+                                               onclick="toggleInvalidReset('.option-radio', true);toggleRequired('.option-radio');"
                                         >
 
                                         {{ option.text }}
