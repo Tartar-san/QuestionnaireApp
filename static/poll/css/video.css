@@ -1,3 +1,7 @@
+.n_p_video_container{
+    height: 315px;
+}
+
 #progressBar {
     width: 560px;
     height: 6px;
@@ -11,3 +15,13 @@
     width: 0;
     background-color: #ffffff;
 }
+.message-container{
+    width: 560px;
+    height: 321px;
+    text-align: center;
+    background-color: #000000;
+    opacity: 0.7;
+    padding-top: 110px;
+    margin-top: -321px;
+}
+

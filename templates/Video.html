@@ -12,6 +12,8 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'poll/css/styles.css' %}">
 
+    <link rel="stylesheet" type="text/css" href="{% static 'poll/css/video.css' %}">
+
     <link rel="">
 
 
@@ -21,7 +23,6 @@
             crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="{% static 'poll/scripts/questions.js' %}"></script>
-    <script type="text/javascript" src="{% static 'poll/scripts/video.js' %}"></script>
 
 </head>
 <body class="bodyStyle">
@@ -29,6 +30,7 @@
         <div class="jumbotron" style=" background-color: #B4D2D7; ">
             <h1 class="">{{ page.heading }}</h1>
             <p>{{ page.text }}</p>
+
             <div class="now_playing">
                  <div class="n_p_video_container">
                     <div class="n_p_video_play"></div>
@@ -40,6 +42,10 @@
                     </div>
                 </div>
             </div>
+            <div id="messageContainer" class="message-container center-horizontal">
+                    <p class="white">Перегляньте, будь ласка, коротке відео</p>
+                    <p class="white">(перед переглядом увімкніть звукові динаміки на Вашому комп'ютері)</p>
+            </div>
             <form action="/poll/next_page" method="post">
                 {% csrf_token %}
                 <div style="text-align: center">
@@ -48,7 +54,28 @@
             </form>
         </div>
     </div>
+
     <script>
+
+var tag = document.createElement('script');
+var player;
+var interval;
+var videoLoaded = false;
+
+setTimeout(startVideoIfLoaded, 6000);
+
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function startVideoIfLoaded(){
+    if(videoLoaded){
+        $('#messageContainer').animate({opacity: 0}, 500).hide();
+         player.playVideo();
+    } else {
+        setTimeout(startVideoIfLoaded, 3000);
+    }
+}
 
 function progress(percent, $element) {
   var progressBarWidth = percent * $element.width();
@@ -56,20 +83,11 @@ function progress(percent, $element) {
   $element.find('div').animate({ width: progressBarWidth });
 }
 
-var tag = document.createElement('script');
-
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
 // 3. This function creates an <iframe> (and YouTube player)
 //    after the API code downloads.
-var player;
-var mytimer;
 
 function onYouTubeIframeAPIReady() {
     var videoId = '{{ video.url }}'.match(/embed\/(.*)\?rel/)[1];
-    console.log(videoId);
     player = new YT.Player('ytplayer', {
       height: '315',
       width: '560',
@@ -85,11 +103,13 @@ function onYouTubeIframeAPIReady() {
             'onStateChange': onPlayerStateChange
         }
     });
+    $('#progressBar').show();
 }
 
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
-    event.target.playVideo();
+//    player.playVideo();
+    videoLoaded = true;
 }
 
 // 5. The API calls this function when the player's state changes.
@@ -98,21 +118,19 @@ function onPlayerReady(event) {
 
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING) {
-
-      $('#progressBar').show();
       var playerTotalTime = player.getDuration();
 
-      mytimer = setInterval(function() {
+      interval = setInterval(function() {
         var playerCurrentTime = player.getCurrentTime();
         var playerTimeDifference = (playerCurrentTime / playerTotalTime);
         progress(playerTimeDifference, $('#progressBar'));
       }, 500);
     } else if (event.data == YT.PlayerState.ENDED){
-        clearTimeout(mytimer);
+        clearTimeout(interval);
          $('#progressBar').hide();
          $('#btnSubmit').prop('disabled', false).removeClass('btn-disabled');
     } else {
-      clearTimeout(mytimer);
+      clearTimeout(interval);
     }
 }
 
