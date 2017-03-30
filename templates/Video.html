@@ -49,9 +49,6 @@
         </div>
     </div>
     <script>
-        /**
- * Created by d1md1m on 30.03.17.
- */
 
 function progress(percent, $element) {
   var progressBarWidth = percent * $element.width();
@@ -71,10 +68,12 @@ var player;
 var mytimer;
 
 function onYouTubeIframeAPIReady() {
+    var videoId = '{{ video.url }}'.match(/embed\/(.*)\?rel/)[1];
+    console.log(videoId);
     player = new YT.Player('ytplayer', {
       height: '315',
       width: '560',
-      videoId: {{ video.url }},//'o3arR_WGJf8',
+      videoId:  videoId,//'o3arR_WGJf8',
         playerVars: {
         'controls' : 0,
         'modestbranding' : 1,
