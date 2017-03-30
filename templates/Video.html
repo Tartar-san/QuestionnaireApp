@@ -21,6 +21,7 @@
             crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="{% static 'poll/scripts/questions.js' %}"></script>
+    <script type="text/javascript" src="{% static 'poll/scripts/video.js' %}"></script>
 
 </head>
 <body class="bodyStyle">
@@ -29,8 +30,25 @@
         <h1 class="">{{ page.heading }}</h1>
         <p>{{ page.text }}</p>
 
-        <iframe width="560" height="315" src="{{ video.url }}" frameborder="0" allowfullscreen></iframe>
+{#        <iframe class="center-horizontal" style="display: block;" width="560" height="315" src="{{ video.url }}&autoplay=1" frameborder="0" allowfullscreen></iframe>#}
+{#        <iframe id="iframe" class="center-horizontal" style="display: block;" width="560" height="315" src="{{ video.url }}" frameborder="0" allowfullscreen></iframe>#}
 
+        <div class="now_playing">
+
+  <div class="n_p_video_container">
+
+    <div class="n_p_video_play"></div>
+
+    <div id="ytplayer"></div>
+
+  </div>
+
+
+  <div class="n_p_video_progressbar">
+
+        <div id="progressBar"><div>
+
+  </div>
 
         <form action="/poll/next_page" method="post">
             {% csrf_token %}

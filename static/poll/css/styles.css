@@ -72,3 +72,6 @@ p.page-text {
     margin-bottom: 10px;
 
 }
+.center-horizontal{
+    margin: 0 auto;
+}

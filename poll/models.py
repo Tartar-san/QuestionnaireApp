@@ -45,7 +45,7 @@ class Question(models.Model):
         ("LanguageChoosing", "LanguageChoosing"),
         ("DateTimeChoosing", "DateTimeChoosing"),
         ("QuestionWithSeveralOptionsAndUserAnswer", "QuestionWithSeveralOptionsAndUserAnswer"),
-        ("TableHeadingQuestion", "TableHeadingQuestion"),
+        ("TableHeadingQuestion", "TableHeadingQuestion")
     )
 
     number = models.IntegerField(default=0)

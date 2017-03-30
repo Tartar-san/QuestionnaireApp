@@ -80,17 +80,19 @@
                             </label>
 
                         {% elif question.type == "SimpleQuestionWithOneAnswer" %}
-                            <fieldset>
+                            <fieldset class="radioContainer">
                                 {% for option in question.options %}
-                                    <br>
+
                                     <label>
 
                                         <input type="radio"
-                                               class="option-radio"
+                                               class="option-radio{{ question.id }}"
                                                name="{{ question.id }}"
                                                value="{{ option.text }}"
-                                               onclick="toggleInvalidReset('.option-radio', true);toggleRequired('.option-radio');"
+                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
+
                                         >
+
 
                                         {{ option.text }}
 
@@ -121,10 +123,11 @@
                                 {% for option in question.options %}
                                     <br>
                                     <label>
-                                        <input type="checkbox" class="option-input"
+                                        <input type="checkbox" class="option-input{{ question.id }}"
                                                name="{{ question.id }}"
                                                value="{{ option.text }}"
-                                               onclick="toggleInvalidReset('.option-input:checkbox'); toggleRequired('.option-input:checkbox');"
+                                               onclick="checkboxFamilyOnclick('.option-input{{ question.id }}');"
+
                                         >
                                         {{ option.text }}
 
@@ -133,10 +136,12 @@
                             </fieldset>
 
                         {% elif question.type == "TableQuestion" %}
-                            <fieldset class="tableContainer">
+                            <fieldset class="radioContainer">
                                 {% for option in question.options %}
 
                                     <label>
+
+
 
                                         <input type="radio"
                                                class="option-radio{{ question.id }}"
@@ -188,16 +193,16 @@
 
 
                         {% elif question.type == "QuestionWithOptionsAndUserAnswer" %}
-                            <fieldset>
+                            <fieldset class="radioContainer">
                                 {% for option in question.options %}
                                     <label>
 
 
                                         <input type="radio"
-                                               class="option-radio"
+                                               class="option-radio{{ question.id }}"
                                                name="{{ question.id }}"
                                                value="{{ option.text }}"
-                                               onclick="toggleInvalidReset('.option-radio', true);toggleRequired('.option-radio');"
+                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
                                         >
 
                                         {{ option.text }}
@@ -225,6 +230,53 @@
                                 </label>
 
                             </fieldset>
+
+                            <!-- by MNITD begin-->
+                            {% elif question.type == "QuestionWithSeveralOptionsAndUserAnswer" %}
+                            <fieldset class="radioContainer">
+                                {% for option in question.options %}
+                                    <label>
+
+
+{#                                        <input type="radio"#}
+{#                                               class="option-radio{{ question.id }}"#}
+{#                                               name="{{ question.id }}"#}
+{#                                               value="{{ option.text }}"#}
+{#                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"#}
+{#                                        >#}
+                                        <input type="checkbox" class="option-input{{ question.id }}"
+                                               name="{{ question.id }}"
+                                               value="{{ option.text }}"
+                                               onclick="checkboxFamilyOnclick('.option-input{{ question.id }}');"
+
+                                        >
+
+                                        {{ option.text }}
+
+                                    </label>
+                                    <br>
+
+                                {% endfor %}
+
+                                <label>
+
+                                    {% if page.language == "RU" %}
+                                        Другое:
+                                    {% elif  page.language == "UA" %}
+                                        Інше:
+                                    {% endif %}
+
+
+                                    <input type="text"
+                                           name="{{ question.id }}"
+
+                                           class="customTextField"
+                                           onkeypress="this.style.width = ((this.value.length + 1) * 15) + 'px';"
+                                    >
+                                </label>
+
+                            </fieldset>
+                             <!-- by MNITD end-->
 
 
                         {% elif question.type == "DummyAnwer(OLD)" %}
