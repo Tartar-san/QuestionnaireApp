@@ -1,5 +1,6 @@
 input, form, .btn {
-    font-size: 24px
+    /*font-size: 24px*/
+    font-size: 20px;
 }
 
 input[type="radio"], input[type="checkbox"] {
@@ -32,7 +33,8 @@ label{
 
 .btn {
     opacity: 0.8;
-    font-size: 30px;
+    /*font-size: 30px;*/
+    font-size: 26px;
     font-weight: bold;
     background-color: #132423;
     color:white;
@@ -56,23 +58,27 @@ ul {
 }
 
 .question-heading {
-    font-size: 36px;
+    /*font-size: 36px;*/
+    font-size: 32px;
     font-weight: bold
 }
 
 h1.page-heading {
-    font-size: 36px;
+    /*font-size: 36px;*/
+    font-size: 32px;
     font-weight: bold
 }
 
 p.page-text {
-    font-size: 22px;
+    /*font-size: 22px;*/
+    font-size: 18px;
     font-style: italic;
     margin-bottom: 30px
 }
 
 .question-text {
-    font-size: 32px;
+    /*font-size: 32px;*/
+    font-size: 28px;
     margin-top: 20px;
     margin-bottom: 10px;
 
