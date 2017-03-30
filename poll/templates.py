@@ -20,6 +20,7 @@ class TemplateQuestion:
             self.text = question.ru_text
 
         self.id = question.id
+        self.number = question.number
         self.type = question.type
         self.options = templateOptions
 
