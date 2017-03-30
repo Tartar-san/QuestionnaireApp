@@ -25,38 +25,101 @@
 
 </head>
 <body class="bodyStyle">
-<div class="contaier">
-    <div class="jumbotron" style=" background-color: #B4D2D7; ">
-        <h1 class="">{{ page.heading }}</h1>
-        <p>{{ page.text }}</p>
-
-{#        <iframe class="center-horizontal" style="display: block;" width="560" height="315" src="{{ video.url }}&autoplay=1" frameborder="0" allowfullscreen></iframe>#}
-{#        <iframe id="iframe" class="center-horizontal" style="display: block;" width="560" height="315" src="{{ video.url }}" frameborder="0" allowfullscreen></iframe>#}
-
-        <div class="now_playing">
-
-  <div class="n_p_video_container">
-
-    <div class="n_p_video_play"></div>
-
-    <div id="ytplayer"></div>
-
-  </div>
-
-
-  <div class="n_p_video_progressbar">
-
-        <div id="progressBar"><div>
-
-  </div>
-
-        <form action="/poll/next_page" method="post">
-            {% csrf_token %}
-            <div style="text-align: center">
-                <input type="submit" value="Далі" class="btn">
+    <div class="contaier">
+        <div class="jumbotron" style=" background-color: #B4D2D7; ">
+            <h1 class="">{{ page.heading }}</h1>
+            <p>{{ page.text }}</p>
+            <div class="now_playing">
+                 <div class="n_p_video_container">
+                    <div class="n_p_video_play"></div>
+                    <div id="ytplayer" class="center-horizontal" style="display: block;"></div>
+                </div>
+                <div class="n_p_video_progressbar">
+                    <div id="progressBar" class="center-horizontal">
+                        <div></div>
+                    </div>
+                </div>
             </div>
-        </form>
+            <form action="/poll/next_page" method="post">
+                {% csrf_token %}
+                <div style="text-align: center">
+                    <input id="btnSubmit" type="submit" value="Далі" class="btn btn-disabled" disabled>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+    <script>
+        /**
+ * Created by d1md1m on 30.03.17.
+ */
+
+function progress(percent, $element) {
+  var progressBarWidth = percent * $element.width();
+  //$element.find('div').animate({ width: progressBarWidth }, 500).html(percent + "%&nbsp;");
+  $element.find('div').animate({ width: progressBarWidth });
+}
+
+var tag = document.createElement('script');
+
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+// 3. This function creates an <iframe> (and YouTube player)
+//    after the API code downloads.
+var player;
+var mytimer;
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('ytplayer', {
+      height: '315',
+      width: '560',
+      videoId: {{ video.url }},//'o3arR_WGJf8',
+        playerVars: {
+        'controls' : 0,
+        'modestbranding' : 1,
+        'rel' : 0,
+        'showinfo' : 0
+      },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+// 4. The API will call this function when the video player is ready.
+function onPlayerReady(event) {
+    event.target.playVideo();
+}
+
+// 5. The API calls this function when the player's state changes.
+//    The function indicates that when playing a video (state=1),
+//    the player should play for six seconds and then stop.
+
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) {
+
+      $('#progressBar').show();
+      var playerTotalTime = player.getDuration();
+
+      mytimer = setInterval(function() {
+        var playerCurrentTime = player.getCurrentTime();
+        var playerTimeDifference = (playerCurrentTime / playerTotalTime);
+        progress(playerTimeDifference, $('#progressBar'));
+      }, 500);
+    } else if (event.data == YT.PlayerState.ENDED){
+        clearTimeout(mytimer);
+         $('#progressBar').hide();
+         $('#btnSubmit').prop('disabled', false).removeClass('btn-disabled');
+    } else {
+      clearTimeout(mytimer);
+    }
+}
+
+function stopVideo() {
+    player.stopVideo();
+}
+    </script>
 </body>
 </html>

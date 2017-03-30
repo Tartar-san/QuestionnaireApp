@@ -44,6 +44,11 @@ label{
     color:white;
 }
 
+.btn-disabled,
+.btn-disabled:hover{
+    opacity: 0.65;
+}
+
 ul {
     list-style-type: none;
     padding-bottom: 20px;
