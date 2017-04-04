@@ -38,9 +38,13 @@
             {% csrf_token %}
             <div style="text-align: center">
                 <input type="submit" value="Прийняти участь в опитуванні" class="btn">
-                <div style="background: url({% static 'poll/imgs/atlant.png' %}) no-repeat center center fixed;">
-                {{ captcha_form }}
+                <div>
+                    {{ captcha_form }}
+                    <img src="{% static 'poll/imgs/atlant.png' %}" alt="atlant" style="float: right;">
                 </div>
+                {#                <div style="background: url({% static 'poll/imgs/atlant.png' %}) no-repeat center right; min-height: 350px;">#}
+
+                {#                </div>#}
             </div>
         </form>
     </div>

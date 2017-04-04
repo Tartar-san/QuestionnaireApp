@@ -2,6 +2,7 @@ input, form, .btn {
     /*font-size: 24px*/
     font-size: 18px;
     letter-spacing: 0.2px;
+
 }
 
 input[type="radio"], input[type="checkbox"] {
@@ -11,14 +12,15 @@ input[type="radio"], input[type="checkbox"] {
 
 
 .customTextField{
+    width: 40%;
+    min-width: 40%;
+    max-width: 100%;
     background-color: #CBDFE3;
     border: none;
     border-bottom: thin;
     border-bottom-style: ridge;
     border-bottom-color: #1c2d3f;
-    width: 40%;
-    min-width: 40%;
-    max-width: 100%;
+    padding: 0 10px;
 
 }
 
@@ -30,6 +32,15 @@ body{
 
 label{
     width:  100%;
+}
+
+label[for="id_captcha"]{
+    display: none;
+}
+
+.g-recaptcha{
+    margin-top: 25px;
+    display: inline-block;
 }
 
 .btn {
