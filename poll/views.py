@@ -109,7 +109,7 @@ def get_page(request):
     elif (page_type == "Video"):
         return render(request, "Video.html", context=context)
     elif (page_type == "Lottery"):
-        return render(request, "Question.html", context=context)
+        return render(request, "Lottery.html", context=context)
     elif (page_type == "FinalPage"):
         return render(request, "FinalPage.html", context=context)
     else:

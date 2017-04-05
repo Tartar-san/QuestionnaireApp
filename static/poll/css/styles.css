@@ -102,3 +102,13 @@ p.page-text {
 .white{
     color: white;
 }
+
+.an-top-3{
+        margin-top: -540px;
+}
+
+@media (min-width: 992px){
+    .an-top-3{
+        margin-top: 0;
+    }
+}

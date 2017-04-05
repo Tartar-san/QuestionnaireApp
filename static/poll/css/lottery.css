@@ -1,0 +1,10 @@
+.coin-checkbox{
+    visibility: hidden;
+}
+.coin{
+    width: 150px;
+    height: 150px;
+}
+.coin:hover{
+    transform: scale(1.1);
+}
