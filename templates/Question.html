@@ -15,6 +15,9 @@
     <meta charset="UTF-8">
     <title>{{ page.title }}</title>
     {% load static %}
+
+    <link rel="icon" href="{% static 'poll/imgs/favicon.ico' %}" type="image/x-icon">
+
     <link rel="stylesheet" type="text/css" href="{% static 'poll/css/normalize.css' %}">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -85,12 +88,17 @@
 
                                     <label>
 
+
+
                                         <input type="radio"
                                                class="option-radio{{ question.id }}"
                                                name="{{ question.id }}"
                                                value="{{ option.text }}"
-                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
-
+                                               {% if question.id == 20 or question.id == 21 %}
+                                                   onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}'); check2021('.option-radio{{ question.id }}')"
+                                               {% else %}
+                                                   onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
+                                               {% endif %}
                                         >
 
 
@@ -135,6 +143,29 @@
                                 {% endfor %}
                             </fieldset>
 
+{#                        {% elif question.type == "TableQuestion" %}#}
+{#                            <fieldset class="radioContainer">#}
+{#                                {% for option in question.options %}#}
+{##}
+{#                                    <label>#}
+{##}
+{##}
+{##}
+{#                                        <input type="radio"#}
+{#                                               class="option-radio{{ question.id }}"#}
+{#                                               name="{{ question.id }}"#}
+{#                                               value="{{ option.text }}"#}
+{#                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"#}
+{##}
+{#                                        >#}
+{##}
+{#                                        {{ option.text }}#}
+{##}
+{#                                    </label>#}
+{#                                    <br>#}
+{#                                {% endfor %}#}
+{#                            </fieldset>#}
+
                         {% elif question.type == "TableQuestion" %}
                             <fieldset class="radioContainer">
                                 {% for option in question.options %}
@@ -148,13 +179,12 @@
                                                name="{{ question.id }}"
                                                value="{{ option.text }}"
                                                onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
-
                                         >
+
 
                                         {{ option.text }}
 
                                     </label>
-                                    <br>
                                 {% endfor %}
                             </fieldset>
 
@@ -231,8 +261,8 @@
 
                             </fieldset>
 
-                            <!-- by MNITD begin-->
-                            {% elif question.type == "QuestionWithSeveralOptionsAndUserAnswer" %}
+                        <!-- by MNITD begin-->
+                        {% elif question.type == "QuestionWithSeveralOptionsAndUserAnswer" %}
                             <fieldset class="radioContainer">
                                 {% for option in question.options %}
                                     <label>

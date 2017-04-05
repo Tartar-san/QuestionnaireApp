@@ -3,12 +3,15 @@
  */
 $(document).ready(function () {
 
-     $('.option-radio-lang').first().attr('required', '');
+     $('.option-radio-lang').first()
+         .attr('required', '')
+         .attr('oninvalid', "this.setCustomValidity('Виберіть мову / Выберите язык')");
      $('.option-radio').first().attr('required', '');
        $('input:checkbox').attr('required', '');
 
 
-        $('.option-radio-lang').first().attr('oninvalid', "this.setCustomValidity('Виберіть мову / Выберите язык')");
+
+        // $('.option-radio-lang').first().attr('oninvalid', "this.setCustomValidity('Виберіть мову / Выберите язык')");
 
        var langChoosing =  $('.option-radio-lang');
        if (langChoosing.length>0){
@@ -21,6 +24,7 @@ $(document).ready(function () {
 
  var userLang = $("html").attr("lang");// navigator.language || navigator.userLanguage;
         for(var i = 0; i< radioContainers.length ;  i++ ){
+            if(!radioContainers[i].children[0]) continue;
             radioContainers[i].children[0].children[0].required=true;
 
 
@@ -58,7 +62,7 @@ $(document).ready(function () {
 
 function setCookiesLikeTrue() {
     document.cookie = "Like=true";
-    alert("liked");
+    console.log("liked");
 }
 
 
@@ -81,7 +85,7 @@ function shareFBonClick(){
 
 function setCookiesShareTrue() {
     document.cookie = "Share=true";
-    alert("shared");
+    console.log("shared");
 }
 
 
@@ -158,5 +162,13 @@ function isInputsChecked(){
           $(className)[0].required=true;
           //$(className).first().attr('required', '');
       }
+  }
+
+  function check2021(className){
+      if($('.option-radio20:checked').val()===$('.option-radio21:checked').val()){
+          setLangMessage(className);
+          $(className)[0].required=true;
+      }
+
   }
 
