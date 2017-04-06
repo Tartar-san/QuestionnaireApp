@@ -20,6 +20,8 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'poll/css/normalize.css' %}">
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <link rel="stylesheet" type="text/css" href="{% static 'poll/css/styles.css' %}">
@@ -28,6 +30,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="{% static 'poll/scripts/i18n/datepicker-uk.js' %}"></script>
+    <script type="text/javascript" src="{% static 'poll/scripts/i18n/datepicker-ru.js' %}"></script>
 
     <script type="text/javascript" src="{% static 'poll/scripts/questions.js' %}"></script>
 
@@ -89,16 +95,15 @@
                                     <label>
 
 
-
                                         <input type="radio"
                                                class="option-radio{{ question.id }}"
                                                name="{{ question.id }}"
                                                value="{{ option.text }}"
-                                               {% if question.id == 20 or question.id == 21 %}
-                                                   onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}'); check2021('.option-radio{{ question.id }}')"
-                                               {% else %}
-                                                   onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
-                                               {% endif %}
+                                                {% if question.id == 20 or question.id == 21 %}
+                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}'); check2021('.option-radio{{ question.id }}')"
+                                                {% else %}
+                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
+                                                {% endif %}
                                         >
 
 
@@ -143,35 +148,34 @@
                                 {% endfor %}
                             </fieldset>
 
-{#                        {% elif question.type == "TableQuestion" %}#}
-{#                            <fieldset class="radioContainer">#}
-{#                                {% for option in question.options %}#}
-{##}
-{#                                    <label>#}
-{##}
-{##}
-{##}
-{#                                        <input type="radio"#}
-{#                                               class="option-radio{{ question.id }}"#}
-{#                                               name="{{ question.id }}"#}
-{#                                               value="{{ option.text }}"#}
-{#                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"#}
-{##}
-{#                                        >#}
-{##}
-{#                                        {{ option.text }}#}
-{##}
-{#                                    </label>#}
-{#                                    <br>#}
-{#                                {% endfor %}#}
-{#                            </fieldset>#}
+                            {#                        {% elif question.type == "TableQuestion" %}#}
+                            {#                            <fieldset class="radioContainer">#}
+                            {#                                {% for option in question.options %}#}
+                            {##}
+                            {#                                    <label>#}
+                            {##}
+                            {##}
+                            {##}
+                            {#                                        <input type="radio"#}
+                            {#                                               class="option-radio{{ question.id }}"#}
+                            {#                                               name="{{ question.id }}"#}
+                            {#                                               value="{{ option.text }}"#}
+                            {#                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"#}
+                            {##}
+                            {#                                        >#}
+                            {##}
+                            {#                                        {{ option.text }}#}
+                            {##}
+                            {#                                    </label>#}
+                            {#                                    <br>#}
+                            {#                                {% endfor %}#}
+                            {#                            </fieldset>#}
 
                         {% elif question.type == "TableQuestion" %}
                             <fieldset class="radioContainer">
                                 {% for option in question.options %}
 
                                     <label>
-
 
 
                                         <input type="radio"
@@ -203,15 +207,18 @@
                                         {{ question.text }}
 
 
-                                        <input type="date"
-                                               lang="ru"
-                                               class="option-radio"
-                                               name="{{ page.id }}"
-                                               max="2010-01-02"
-                                               required
-                                               min="1950-12-31"
-                                               onclick="toggleInvalidReset('.option-radio', true);toggleRequired('.option-radio');"
-                                        >
+                                        <input type="text" id="datepicker" class="option-radio"
+                                                {# name="{{ page.id }} required">
+
+                                        {#                                        <input type="date"#}
+                                        {#                                               lang="ru"#}
+                                        {#                                               class="option-radio"#}
+                                        {#                                               name="{{ page.id }}"#}
+                                        {#                                               max="2010-01-02"#}
+                                        {#                                               required#}
+                                        {#                                               min="1950-12-31"#}
+                                        {#                                               onclick="toggleInvalidReset('.option-radio', true);toggleRequired('.option-radio');"#}
+                                        {#                                        >#}
                                     </p>
 
                                 </label>
@@ -261,19 +268,19 @@
 
                             </fieldset>
 
-                        <!-- by MNITD begin-->
+                            <!-- by MNITD begin-->
                         {% elif question.type == "QuestionWithSeveralOptionsAndUserAnswer" %}
                             <fieldset class="radioContainer">
                                 {% for option in question.options %}
                                     <label>
 
 
-{#                                        <input type="radio"#}
-{#                                               class="option-radio{{ question.id }}"#}
-{#                                               name="{{ question.id }}"#}
-{#                                               value="{{ option.text }}"#}
-{#                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"#}
-{#                                        >#}
+                                        {#                                        <input type="radio"#}
+                                        {#                                               class="option-radio{{ question.id }}"#}
+                                        {#                                               name="{{ question.id }}"#}
+                                        {#                                               value="{{ option.text }}"#}
+                                        {#                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"#}
+                                        {#                                        >#}
                                         <input type="checkbox" class="option-input{{ question.id }}"
                                                name="{{ question.id }}"
                                                value="{{ option.text }}"
@@ -306,7 +313,7 @@
                                 </label>
 
                             </fieldset>
-                             <!-- by MNITD end-->
+                            <!-- by MNITD end-->
 
 
                         {% elif question.type == "DummyAnwer(OLD)" %}
@@ -362,6 +369,26 @@
 
     </div>
 </div>
+
+<script>
+    $(function () {
+        {% if page.language == "UA" %}
+            $.datepicker.setDefaults($.datepicker.regional['uk']);
+        {% elif  page.language == "RU" %}
+            $.datepicker.setDefaults($.datepicker.regional['ru']);
+        {% endif %}
+
+        $("#datepicker").datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: '1950:2010',
+            {#        minDate: new Date(new Date().getFullYear() - 67, 1,2  ),#}
+            maxDate: new Date(new Date().getFullYear() - 7, 12, 31),
+            showMonthAfterYear: true
+        });
+    });
+</script>
 
 
 </body>
