@@ -7,7 +7,7 @@
 
 function setCookiesLikeTrue() {
     document.cookie = "Like=true";
-    alert("");
+    console.log("Like=true")
 }
 
 
@@ -17,10 +17,11 @@ function shareFBonClick(){
         link: 'https://www.facebook.com/atlantynespisuyut/',
         //caption: 'An example caption'
     }, function(response){
-        if (response === null) {
-            console.log('was not shared');
-        } else {
+        // if (response === null) {
+        if (rresponse && !response.error_code) {
             setCookiesShareTrue();
+        } else {
+            console.log('was not shared');
         }
     });
 }
@@ -30,5 +31,5 @@ function shareFBonClick(){
 
 function setCookiesShareTrue() {
     document.cookie = "Share=true";
-    alert("shared");
+    console.log("Share=true");
 }

@@ -25,10 +25,10 @@ class Page(models.Model):
     type = models.CharField(max_length=50, choices=PAGE_TYPES)
     ua_title = models.CharField(max_length=50)
     ru_title = models.CharField(max_length=50)
-    ua_heading = models.CharField(max_length=200, blank=True)
-    ru_heading = models.CharField(max_length=200, blank=True)
-    ua_text = models.CharField(max_length=2000, blank=True)
-    ru_text = models.CharField(max_length=2000, blank=True)
+    ua_heading = models.TextField(max_length=500, blank=True)
+    ru_heading = models.TextField(max_length=500, blank=True)
+    ua_text = models.TextField(max_length=2000, blank=True)
+    ru_text = models.TextField(max_length=2000, blank=True)
     questionnaire = models.ForeignKey(Questionnaire)
 
     def __str__(self):

@@ -99,10 +99,19 @@ p.page-text {
     margin: 0 auto;
 }
 
+.flexbox{
+    display: flex !important;
+}
+.flexbox.center-h{
+    justify-content: space-around;
+}
+
 .white{
     color: white;
 }
-
+.top-20{
+    padding-top: 20px;
+}
 .an-top-3{
         margin-top: -540px;
 }
