@@ -136,7 +136,7 @@ def post_answer(request):
     if (page.type == "Lottery"):
         coins = ""
         for i in range(10):
-            if (request.POST.getlist("coin"+str(i+1)+"_checkbox")[0] == "true"):
+            if (str(i+1) in request.POST and request.POST[str(i+1)] == "on"):
                 coins += "H"
             else:
                 coins += "T"
