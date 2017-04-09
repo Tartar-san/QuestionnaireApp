@@ -89,7 +89,7 @@ p.page-text {
     margin-bottom: 30px
 }
 
-.question-text {
+.question-text, p.question-text {
     /*font-size: 32px;*/
     font-size: 26px;
     margin-top: 20px;
@@ -100,6 +100,10 @@ p.page-text {
 .coin-container{
     font-size: 14px;
     letter-spacing: normal;
+}
+
+.text-center{
+    text-align: center;
 }
 .center-horizontal{
     margin: 0 auto;
