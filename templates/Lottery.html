@@ -190,16 +190,20 @@
                     </label>
                 </div>
             </div>
+
+         {% if page.language == "RU" %}
+            Ваш 10-значный код для участия в лотарее. Сохраните или запишите его, чтобы не потерять.
+
+        {% elif  page.language == "UA" %}
+            Ваш 10-значний код для участі у лотареї. Збережіть або запишіть його, щоб не загубити.
+
+        {% endif %}
+
             <ul>
                 {% for question in questions %}
                     <li class="question-text">
                         {{ question.heading }}
                     </li>
-
-                    <li>
-                        {{ question.text }}
-                    </li>
-
                 {% endfor %}
             </ul>
             <div style="text-align: center">

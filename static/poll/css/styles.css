@@ -26,6 +26,7 @@ input[type="radio"], input[type="checkbox"] {
 
 
 body{
+      font-size: 18px;
     background-color: #B4D2D7;
 }
 
@@ -93,8 +94,8 @@ p.page-text {
     font-size: 26px;
     margin-top: 20px;
     margin-bottom: 10px;
-
 }
+
 
 .coin-container{
     font-size: 14px;
