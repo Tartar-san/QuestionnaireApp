@@ -164,10 +164,16 @@ function isInputsChecked(){
       }
   }
 
-  function check2021(className){
-      if($('.option-radio20:checked').val()===$('.option-radio21:checked').val()){
+  function  check2021(){
+    return $('.option-radio20:checked').val()===$('.option-radio21:checked').val();
+  }
+
+  function validate2021(className){
+      if(check2021()){
+          console.log($('.option-radio20:checked').val());
           setLangMessage(className);
           $(className)[0].required=true;
+          $(className+":checked").removeAttr("checked");
       }
 
   }

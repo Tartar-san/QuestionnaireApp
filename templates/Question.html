@@ -100,7 +100,7 @@
                                                name="{{ question.id }}"
                                                value="{{ option.text }}"
                                                 {% if question.id == 20 or question.id == 21 %}
-                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}'); check2021('.option-radio{{ question.id }}')"
+                                               onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}'); validate2021('.option-radio{{ question.id }}')"
                                                 {% else %}
                                                onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
                                                 {% endif %}
