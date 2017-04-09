@@ -43,7 +43,7 @@
             <a href="https://www.random.org/coins/?num=10&cur=60-usd.0001c">random.org </a>, где есть модель случайного
             подбрасывания
             монетки и установить выпавшую последовательносты.
-
+            <br>
             <br>Среди учасников, которые получили наибольшее количество выпадений монеток "орлом" будет разыграно 10
             призов по 500 гривень каждый. После отправки данных на этой сторанице вы получите 10-значний код.
             Коды 10 победителей будут опубликованы на странице
@@ -57,7 +57,7 @@
 
             <br>2) Використати сайт <a href="https://www.random.org/coins/?num=10&cur=60-usd.0001c">random.org </a>, де
             є модель випадкового кидання монети і виставити отриману послідовність.
-
+            <br>
             <br>Серед учасників, які отримали найбільшу кількість випадань монеток "орлом" буде проведено розіграш 10
             призів по 500 гривень кожен. Після підтвердження введення даних на цій сторінці ви отримаєте 10-значний код.
             Саме коди 10 переможців будуть опубліковані на сторінці
@@ -84,7 +84,7 @@
                              alt="">
                         <img id="coin1_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
                              alt="">
-                        <input id="coin1_checkbox" class="coin-checkbox" type="checkbox">
+                        <input id="coin1_checkbox" class="coin-checkbox" type="checkbox" name="1">
                     </label>
                 </div>
                 <div class="col col-sm-4 col-md-2">
@@ -95,7 +95,7 @@
                              alt="">
                         <img id="coin2_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
                              alt="">
-                        <input id="coin2_checkbox" class="coin-checkbox" type="checkbox">
+                        <input id="coin2_checkbox" class="coin-checkbox" type="checkbox" name="2">
                     </label>
                 </div>
                 <div class="col col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0">
@@ -106,7 +106,7 @@
                              alt="">
                         <img id="coin3_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
                              alt="">
-                        <input id="coin3_checkbox" class="coin-checkbox" type="checkbox">
+                        <input id="coin3_checkbox" class="coin-checkbox" type="checkbox" name="3">
                     </label>
                 </div>
                 <div class="col col-sm-4 col-md-2">
@@ -117,7 +117,7 @@
                              alt="">
                         <img id="coin4_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
                              alt="">
-                        <input id="coin4_checkbox" class="coin-checkbox" type="checkbox">
+                        <input id="coin4_checkbox" class="coin-checkbox" type="checkbox" name="4">
                     </label>
                 </div>
                 <div class="col col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0">
@@ -128,7 +128,7 @@
                              alt="">
                         <img id="coin5_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
                              alt="">
-                        <input id="coin5_checkbox" class="coin-checkbox" type="checkbox">
+                        <input id="coin5_checkbox" class="coin-checkbox" type="checkbox" name="5">
                     </label>
                 </div>
             </div>
@@ -141,7 +141,7 @@
                              alt="">
                         <img id="coin7_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
                              alt="">
-                        <input id="coin7_checkbox" class="coin-checkbox" type="checkbox">
+                        <input id="coin7_checkbox" class="coin-checkbox" type="checkbox" name="7">
                     </label>
                 </div>
                 <div class="col col-sm-4 col-md-2 col-md-push-2">
@@ -152,7 +152,7 @@
                              alt="">
                         <img id="coin8_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
                              alt="">
-                        <input id="coin8_checkbox" class="coin-checkbox" type="checkbox">
+                        <input id="coin8_checkbox" class="coin-checkbox" type="checkbox" name="8">
                     </label>
                 </div>
                 <div class="col col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0 col-md-push-2">
@@ -163,7 +163,7 @@
                              alt="">
                         <img id="coin9_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
                              alt="">
-                        <input id="coin9_checkbox" class="coin-checkbox" type="checkbox">
+                        <input id="coin9_checkbox" class="coin-checkbox" type="checkbox" name="9">
                     </label>
                 </div>
                 <div class="col col-sm-4 col-md-2 col-md-push-2">
@@ -175,7 +175,7 @@
                         <img id="coin10_head" class="coin" style="display: none;"
                              src="{% static 'poll/imgs/head.png' %}"
                              alt="">
-                        <input id="coin10_checkbox" class="coin-checkbox" type="checkbox">
+                        <input id="coin10_checkbox" class="coin-checkbox" type="checkbox" name="10">
                     </label>
                 </div>
                 <div class="col col-sm-4 col-sm-offset-0 col-sm-pull-0 col-sm-push-6 col-md-2 col-md-offset-1 col-md-push-0 col-md-pull-9 an-top-3">
@@ -186,7 +186,7 @@
                              alt="">
                         <img id="coin6_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
                              alt="">
-                        <input id="coin6_checkbox" class="coin-checkbox" type="checkbox">
+                        <input id="coin6_checkbox" class="coin-checkbox" type="checkbox" name="6">
                     </label>
                 </div>
             </div>
@@ -199,10 +199,11 @@
 
         {% endif %}
 
-            <ul>
-               {{ lottery_number }}
-            </ul>
-            <div style="text-align: center">
+            <p class="question-text text-center"> Код: {{ lottery_number }}</p>
+
+
+
+            <div class="top-20" style="text-align: center">
                 <input id="submitBtn"
                        type="submit"
                        class="btn"
