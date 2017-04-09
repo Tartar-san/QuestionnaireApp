@@ -67,7 +67,6 @@ def get_context(respondent):
         context["captcha_form"] = FormWithCaptcha()
     if (db_page.type in ["Video"]):
         context["video"] = template_video
-
         video_answer = Answer(question=db_questions.get(number=171),
                               respondent=respondent,
                               text=template_video.url)
@@ -75,6 +74,9 @@ def get_context(respondent):
         spreadsheet_updater.add_answer(template_video.key_name,
                                        db_questions.get(number=171).id,
                                        respondent.spreadsheet_row)
+
+    if (db_page.type in ["Lottery"]):
+        context["lottery_number"] = respondent.lottery_number
 
     return context, db_page.type
 
@@ -88,8 +90,18 @@ def get_page(request):
         # try to get this respondent information
         respondent = Respondent.objects.get(identity=request.session.session_key)
     except:
+        # generate unique lottery number first
+        lottery_number = ""
+        for i in range(10):
+            lottery_number += random.choice('0123456789')
+
+        while Respondent.objects.filter(lottery_number=lottery_number).count() != 0:
+            lottery_number = ""
+            for i in range(10):
+                lottery_number += random.choice('0123456789')
+
         # create session in db
-        respondent = Respondent(identity=request.session.session_key, page=1)
+        respondent = Respondent(identity=request.session.session_key, page=1, lottery_number=lottery_number)
         respondent.save()
         spreadsheet_updater.add_respondent(respondent.spreadsheet_row)
 
@@ -121,7 +133,9 @@ def post_answer(request):
     #try:
     page = Page.objects.get(number=respondent.page)
     questions = Question.objects.filter(page=page)
-    if (page.type == "Login"):
+    if (page.type == "Lottery"):
+        pass
+    elif (page.type == "Login"):
         text_like = request.COOKIES["Like"]
         question_like = questions.get(ua_heading="Лайкнув")
         answer_like = Answer(respondent=respondent,
@@ -135,8 +149,8 @@ def post_answer(request):
     else:
         if (page.type == "Starting"):
             form = FormWithCaptcha(request.POST)
-            #if not form.is_valid():
-            #    return HttpResponseRedirect('/poll/')
+            if not form.is_valid():
+                return HttpResponseRedirect('/poll/')
     # one page could contain several questions
         for question in questions:
          # some questions could have several answers

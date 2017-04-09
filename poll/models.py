@@ -79,6 +79,7 @@ class Respondent(models.Model):
     language = models.CharField(max_length=20, choices=LANGUAGES, default="UA")
     page = models.IntegerField(default=0)
     spreadsheet_row = models.AutoField(primary_key=True)
+    lottery_number = models.CharField(max_length=10, default="0")
 
     def __str__(self):
         return "Identity: " + self.identity \
@@ -111,5 +112,4 @@ class Video(models.Model):
 
     def __str__(self):
         return self.key_name
-
 
