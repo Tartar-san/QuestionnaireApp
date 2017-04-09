@@ -134,7 +134,22 @@ def post_answer(request):
     page = Page.objects.get(number=respondent.page)
     questions = Question.objects.filter(page=page)
     if (page.type == "Lottery"):
-        pass
+        coins = ""
+        for i in range(10):
+            if (request.POST.getlist("coin"+str(i+1)+"_checkbox")[0] == "true"):
+                coins += "H"
+            else:
+                coins += "T"
+
+        question_lottery_coins = questions.get(ua_heading="Послідовність монеток")
+        question_lottery_number = questions.get(ua_heading="Лотерейний номер")
+        lottery_coins = Answer(respondent = respondent,
+                               question=question_lottery_coins,
+                               text=coins)
+        lottery_coins.save()
+        spreadsheet_updater.add_answer(str(coins), question_lottery_coins.id, respondent.spreadsheet_row)
+        spreadsheet_updater.add_answer(str(respondent.lottery_number), question_lottery_number.id, respondent.spreadsheet_row)
+
     elif (page.type == "Login"):
         text_like = request.COOKIES["Like"]
         question_like = questions.get(ua_heading="Лайкнув")
@@ -143,8 +158,6 @@ def post_answer(request):
                              text=text_like)
         answer_like.save()
         spreadsheet_updater.add_answer(str(text_like), question_like.id, respondent.spreadsheet_row)
-
-
         #shared = request.POST["Shared"] == "true"
     else:
         if (page.type == "Starting"):
