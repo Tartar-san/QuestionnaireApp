@@ -151,7 +151,10 @@ def post_answer(request):
         spreadsheet_updater.add_answer(str(respondent.lottery_number), question_lottery_number.id, respondent.spreadsheet_row)
 
     elif (page.type == "Login"):
-        text_like = request.COOKIES["Like"]
+        if "Like" in request.COOKIES:
+            text_like = request.COOKIES["Like"]
+        else:
+            text_like = "FALSE"
         question_like = questions.get(ua_heading="Лайкнув")
         answer_like = Answer(respondent=respondent,
                              question=question_like,
