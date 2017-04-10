@@ -20,6 +20,7 @@ input[type="radio"], input[type="checkbox"] {
     border-bottom: thin;
     border-bottom-style: ridge;
     border-bottom-color: #1c2d3f;
+    border-radius: 5px;
     padding: 0 10px;
 
 }
