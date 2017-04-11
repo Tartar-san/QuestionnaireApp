@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }}</title>
     {% load static %}
 
@@ -70,7 +71,7 @@
         <form id="mainForm" action="/poll/next_page" method="post" >
             {% csrf_token %}
             <div class="row top-20 coin-container">
-                <div class="col col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-1">
+                <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-1">
                     <label>
                         &nbsp;1.
                         <img id="coin1_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
@@ -81,7 +82,7 @@
                         <input id="coin1_checkbox" class="coin-checkbox" type="checkbox" name="1">
                     </label>
                 </div>
-                <div class="col col-sm-4 col-md-2">
+                <div class="col col-xs-5 col-sm-4 col-md-2">
                     <label>
                         &nbsp;2.
                         <img id="coin2_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
@@ -92,7 +93,7 @@
                         <input id="coin2_checkbox" class="coin-checkbox" type="checkbox" name="2">
                     </label>
                 </div>
-                <div class="col col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0">
+                <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0">
                     <label>
                         &nbsp;3.
                         <img id="coin3_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
@@ -103,7 +104,7 @@
                         <input id="coin3_checkbox" class="coin-checkbox" type="checkbox" name="3">
                     </label>
                 </div>
-                <div class="col col-sm-4 col-md-2">
+                <div class="col col-xs-5 col-sm-4 col-md-2">
                     <label>
                         &nbsp;4.
                         <img id="coin4_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
@@ -114,7 +115,7 @@
                         <input id="coin4_checkbox" class="coin-checkbox" type="checkbox" name="4">
                     </label>
                 </div>
-                <div class="col col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0">
+                <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0">
                     <label>
                         &nbsp;5.
                         <img id="coin5_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
@@ -127,7 +128,7 @@
                 </div>
             </div>
             <div class="row coin-container">
-                <div class="col col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-1 col-md-push-2">
+                <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-1 col-md-push-2">
                     <label>
                         &nbsp;7.
                         <img id="coin7_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
@@ -138,7 +139,7 @@
                         <input id="coin7_checkbox" class="coin-checkbox" type="checkbox" name="7">
                     </label>
                 </div>
-                <div class="col col-sm-4 col-md-2 col-md-push-2">
+                <div class="col col-xs-5 col-sm-4 col-md-2 col-md-push-2">
                     <label>
                         &nbsp;8.
                         <img id="coin8_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
@@ -149,7 +150,7 @@
                         <input id="coin8_checkbox" class="coin-checkbox" type="checkbox" name="8">
                     </label>
                 </div>
-                <div class="col col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0 col-md-push-2">
+                <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0 col-md-push-2">
                     <label>
                         &nbsp;9.
                         <img id="coin9_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
@@ -160,7 +161,7 @@
                         <input id="coin9_checkbox" class="coin-checkbox" type="checkbox" name="9">
                     </label>
                 </div>
-                <div class="col col-sm-4 col-md-2 col-md-push-2">
+                <div class="col col-xs-5 col-sm-4 col-md-2 col-md-push-2">
                     <label>
                         10.
                         <img id="coin10_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
@@ -172,7 +173,7 @@
                         <input id="coin10_checkbox" class="coin-checkbox" type="checkbox" name="10">
                     </label>
                 </div>
-                <div class="col col-sm-4 col-sm-offset-0 col-sm-pull-0 col-sm-push-6 col-md-2 col-md-offset-1 col-md-push-0 col-md-pull-9 an-top-3">
+                <div class="col col-xs-5 col-xs-offset-0 col-xs-pull-0 col-xs-push-6 col-sm-4 col-sm-offset-0 col-md-2 col-md-offset-1 col-md-push-0 col-md-pull-9 an-top-3">
                     <label>
                         &nbsp;6.
                         <img id="coin6_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">

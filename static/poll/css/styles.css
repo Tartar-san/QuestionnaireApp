@@ -1,12 +1,18 @@
+.atlant {
+    width: 80%;
+}
+
 input, form, .btn {
-    font-size: 32px;
+    /*font-size: 26px;*/
+    font-size: 18px;
     letter-spacing: 0.2px;
 
 }
 
 input[type="radio"], input[type="checkbox"] {
-    transform: scale(4);
-    margin: 0 15px 24px 15px;
+    /*transform: scale(4);*/
+    transform: scale(2);
+    margin: 0 5px 10px 15px;
 }
 
 .customTextField {
@@ -24,7 +30,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 body {
-    font-size: 32px;
+    font-size: 24px;
     background-color: #B4D2D7;
 }
 
@@ -37,14 +43,15 @@ label[for="id_captcha"] {
 }
 
 .g-recaptcha {
-    font-size: 30px;
+    font-size: 24px;
     margin-top: 30px;
     display: inline-block;
 }
 
 .btn {
     opacity: 0.8;
-    font-size: 38px;
+    /*font-size: 32px;*/
+    font-size: 20px;
     font-weight: bold;
     background-color: #132423;
     color: white;
@@ -63,34 +70,41 @@ label[for="id_captcha"] {
 
 ul {
     list-style-type: none;
-    padding-bottom: 42px;
+    padding: 0;
+    padding-bottom: 32px;
     max-width: none;
 }
 
+li{
+    padding-bottom:  10px;
+}
+
 .question-heading {
-    font-size: 44px;
+    /*font-size: 38px;*/
+    font-size: 28px;
     font-weight: bold
 }
 
 h1.page-heading {
-    font-size: 44px;
+    font-size: 36px;
     font-weight: bold
 }
 
 p.page-text {
-    font-size: 30px;
+    font-size: 22px;
     font-style: italic;
     margin-bottom: 30px;
 }
 
 .question-text, p.question-text {
-    font-size: 40px;
-    margin-top: 30px;
-    margin-bottom: 20px;
+    /*font-size: 34px;*/
+    font-size: 24px;
+    margin-top: 20px;
+    /*margin-bottom: 10px;*/
 }
 
 .coin-container {
-    font-size: 28px;
+    font-size: 20px;
     letter-spacing: normal;
 }
 
@@ -132,7 +146,7 @@ p.page-text {
 }
 
 .an-top-3 {
-    margin-top: -464px;
+    margin-top: -494px;
 }
 
 /*Media Queries*/
@@ -140,6 +154,11 @@ p.page-text {
 /*-sm-*/
 
 @media screen and (min-device-width: 768px) {
+
+    .atlant {
+        width: auto;
+    }
+
     input, form, .btn {
         font-size: 18px;
     }
@@ -186,7 +205,7 @@ p.page-text {
     .question-text, p.question-text {
         font-size: 26px;
         margin-top: 20px;
-        margin-bottom: 10px;
+        /*margin-bottom: 10px;*/
     }
 
     .coin-container {
@@ -197,13 +216,11 @@ p.page-text {
         width: 750px;
     }
 
-     .an-top-3 {
+    .an-top-3 {
         margin-top: -540px;
     }
 
 }
-
-
 
 /*-md-*/
 @media (min-width: 992px) {

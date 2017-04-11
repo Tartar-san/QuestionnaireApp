@@ -2,9 +2,16 @@
     visibility: hidden;
 }
 .coin{
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
 }
 .coin:hover{
     transform: scale(1.1);
+}
+
+@media screen and (min-device-width: 768px) {
+ .coin{
+    width: 150px;
+    height: 150px;
+}
 }

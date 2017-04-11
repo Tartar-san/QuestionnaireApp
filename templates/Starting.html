@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     {% load static %}
 
     <link rel="icon" href="{% static 'poll/imgs/favicon.ico' %}" type="image/x-icon">
@@ -40,11 +42,16 @@
         <form action="/poll/next_page" method="post">
             {% csrf_token %}
             <div style="text-align: center">
-                <input type="submit" value="Прийняти участь в опитуванні" class="btn">
+
+                 {{ captcha_form }}
+
                 <div>
-                    {{ captcha_form }}
-                    <img src="{% static 'poll/imgs/atlant.png' %}" alt="atlant" style="float: right;">
+{#                     <input type="submit" value="Прийняти участь в опитуванні" class="btn">#}
+                     <input type="submit" value="Почати опитування" class="btn">
                 </div>
+
+
+                <img class="atlant" src="{% static 'poll/imgs/atlant.png' %}" alt="atlant" style="float: right;">
                 {#                <div style="background: url({% static 'poll/imgs/atlant.png' %}) no-repeat center right; min-height: 350px;">#}
 
                 {#                </div>#}

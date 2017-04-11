@@ -13,6 +13,7 @@
 
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }}</title>
     {% load static %}
 
@@ -107,7 +108,7 @@
                                         >
 
 
-                                        {{ option.text }}
+                                       {{ option.text }}
 
                                     </label>
                                 {% endfor %}
@@ -143,6 +144,7 @@
 
                                         >
                                         {{ option.text }}
+
 
                                     </label>
                                 {% endfor %}
@@ -242,7 +244,7 @@
                                                onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
                                         >
 
-                                        {{ option.text }}
+                                       {{ option.text }}
 
                                     </label>
                                     <br>
@@ -288,7 +290,7 @@
 
                                         >
 
-                                        {{ option.text }}
+                                         {{ option.text }}
 
                                     </label>
                                     <br>
