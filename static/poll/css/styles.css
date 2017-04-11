@@ -15,6 +15,10 @@ input[type="radio"], input[type="checkbox"] {
     margin: 0 5px 10px 15px;
 }
 
+input[type="text"]{
+     padding: 0 10px;
+}
+
 .customTextField {
     /*width: 40%;*/
     min-width: 100%;
@@ -139,6 +143,10 @@ p.page-text {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.ui-datepicker-calendar {
+    display: none;
 }
 
 .top-20 {

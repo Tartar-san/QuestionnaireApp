@@ -108,7 +108,7 @@
                                         >
 
 
-                                       {{ option.text }}
+                                        {{ option.text }}
 
                                     </label>
                                 {% endfor %}
@@ -198,36 +198,31 @@
 
                         {% elif question.type == "DateTimeChoosing" %}
 
-                            <form>
+
+                            <br>
+
+                            <label>
 
                                 <br>
-
-                                <label>
-
-                                    <br>
-                                    <p align="center">
-                                        {{ question.text }}
+                                <p align="center">
+                                    {{ question.text }}
 
 
-                                        <input type="text" id="datepicker" class="option-radio"
-                                                {# name="{{ page.id }} required">
+                                    <input type="text" id="datepicker" class="option-radio"
+                                           name="{{ page.id }}" required>
 
-                                        {#                                        <input type="date"#}
-                                        {#                                               lang="ru"#}
-                                        {#                                               class="option-radio"#}
-                                        {#                                               name="{{ page.id }}"#}
-                                        {#                                               max="2010-01-02"#}
-                                        {#                                               required#}
-                                        {#                                               min="1950-12-31"#}
-                                        {#                                               onclick="toggleInvalidReset('.option-radio', true);toggleRequired('.option-radio');"#}
-                                        {#                                        >#}
-                                    </p>
+                                    {#                                        <input type="date"#}
+                                    {#                                               lang="ru"#}
+                                    {#                                               class="option-radio"#}
+                                    {#                                               name="{{ page.id }}"#}
+                                    {#                                               max="2010-01-02"#}
+                                    {#                                               required#}
+                                    {#                                               min="1950-12-31"#}
+                                    {#                                               onclick="toggleInvalidReset('.option-radio', true);toggleRequired('.option-radio');"#}
+                                    {#                                        >#}
+                                </p>
 
-                                </label>
-
-
-                            </form>
-
+                            </label>
 
 
 
@@ -244,7 +239,7 @@
                                                onclick="toggleInvalidReset('.option-radio{{ question.id }}', true);toggleRequired('.option-radio{{ question.id }}');"
                                         >
 
-                                       {{ option.text }}
+                                        {{ option.text }}
 
                                     </label>
                                     <br>
@@ -290,7 +285,7 @@
 
                                         >
 
-                                         {{ option.text }}
+                                        {{ option.text }}
 
                                     </label>
                                     <br>
@@ -381,12 +376,20 @@
         {% endif %}
 
         $("#datepicker").datepicker({
-            dateFormat: 'dd-mm-yy',
+            dateFormat: 'MM yy',
             changeMonth: true,
             changeYear: true,
             yearRange: '1950:2010',
             {#        minDate: new Date(new Date().getFullYear() - 67, 1,2  ),#}
             maxDate: new Date(new Date().getFullYear() - 7, 12, 31),
+            onClose: function (dateText, inst) {
+                if (new Date().getFullYear() - 6 !== inst.selectedYear) {
+                    $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+                    toggleInvalidReset('.option-radio', true);
+                    toggleRequired('.option-radio');
+                }
+            },
+            showButtonPanel: true,
             showMonthAfterYear: true
         });
     });
