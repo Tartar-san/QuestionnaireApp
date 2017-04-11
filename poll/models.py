@@ -48,7 +48,7 @@ class Question(models.Model):
         ("TableHeadingQuestion", "TableHeadingQuestion")
     )
 
-    number = models.IntegerField(default=0)
+    number = models.CharField(max_length=10, default="0")
     type = models.CharField(max_length=50, choices=QUESTION_TYPES)
     ua_heading = models.CharField(max_length=200)
     ru_heading = models.CharField(max_length=200)
