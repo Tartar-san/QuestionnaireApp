@@ -16,7 +16,7 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 input[type="text"]{
-     padding: 0 10px;
+     padding: 2px 12px;
 }
 
 .customTextField {
@@ -24,10 +24,11 @@ input[type="text"]{
     min-width: 100%;
     max-width: 100%;
     background-color: #CBDFE3;
-    border: none;
-    border-bottom: thin;
-    border-bottom-style: ridge;
-    border-bottom-color: #1c2d3f;
+    border-width: 1px;
+    /*border: none;*/
+    /*border-bottom: thin;*/
+    /*border-bottom-style: ridge;*/
+    /*border-bottom-color: #1c2d3f;*/
     border-radius: 5px;
     padding: 0 10px;
 

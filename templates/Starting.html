@@ -43,11 +43,11 @@
             {% csrf_token %}
             <div style="text-align: center">
 
-                 {{ captcha_form }}
+                {{ captcha_form }}
 
                 <div>
-{#                     <input type="submit" value="Прийняти участь в опитуванні" class="btn">#}
-                     <input type="submit" value="Почати опитування" class="btn">
+                    {#                     <input type="submit" value="Прийняти участь в опитуванні" class="btn">#}
+                    <input type="submit" value="Почати опитування" class="btn">
                 </div>
 
 
@@ -59,6 +59,10 @@
         </form>
     </div>
 </div>
-
+<script type="text/javascript">
+    var RecaptchaOptions = {
+        lang: 'uk'
+    };
+</script>
 </body>
 </html>
