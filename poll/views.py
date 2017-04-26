@@ -77,6 +77,8 @@ def get_context(respondent):
 
     if (db_page.type in ["Lottery"]):
         context["lottery_number"] = respondent.lottery_number
+        # TODO
+        context["lottery_case"] = "both"
 
     return context, db_page.type
 

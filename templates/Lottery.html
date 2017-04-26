@@ -21,7 +21,7 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 
-{#    <script type="text/javascript" src="{% static 'poll/scripts/questions.js' %}"></script>#}
+    {#    <script type="text/javascript" src="{% static 'poll/scripts/questions.js' %}"></script>#}
     <script type="text/javascript" src="{% static 'poll/scripts/lottery.js' %}"></script>
 </head>
 <body class="bodyStyle">
@@ -39,7 +39,8 @@
 
             <br>1) Просим Вас подбросить монетку 10 раз и выставить полученную последовательность на этой странице
             (аверс-реверс, Герб-Гривня)
-            <br>2) Нажать кнопку "Сгенерировать", которая автоматически случайным образом выставит сгенерированную последовательность.
+            <br>2) Нажать кнопку "Сгенерировать", которая автоматически случайным образом выставит сгенерированную
+            последовательность.
             <br>
             <br>Среди учасников, которые получили наибольшее количество выпадений монеток "Гербом" будет разыграно 10
             призов по 500 гривень каждый. После отправки данных на этой сторанице вы получите 10-значний код.
@@ -59,157 +60,199 @@
             <a href="https://www.facebook.com/atlantynespisuyut/"> "Атланти не списують"</a> у Facebook після закінчення
             розіграшу.
 
-
-
-
         {% endif %}
 
-
-
-
-
-        <form id="mainForm" action="/poll/next_page" method="post" >
+        <form id="mainForm" action="/poll/next_page" method="post">
             {% csrf_token %}
-            <div class="row top-20 coin-container">
-                <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-1">
-                    <label>
-                        &nbsp;1.
-                        <img id="coin1_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
-                        <img id="coin1_tail" class="coin" style="display: none;" src="{% static 'poll/imgs/tail.png' %}"
-                             alt="">
-                        <img id="coin1_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
-                             alt="">
-                        <input id="coin1_checkbox" class="coin-checkbox" type="checkbox" name="1">
-                    </label>
-                </div>
-                <div class="col col-xs-5 col-sm-4 col-md-2">
-                    <label>
-                        &nbsp;2.
-                        <img id="coin2_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
-                        <img id="coin2_tail" class="coin" style="display: none;" src="{% static 'poll/imgs/tail.png' %}"
-                             alt="">
-                        <img id="coin2_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
-                             alt="">
-                        <input id="coin2_checkbox" class="coin-checkbox" type="checkbox" name="2">
-                    </label>
-                </div>
-                <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0">
-                    <label>
-                        &nbsp;3.
-                        <img id="coin3_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
-                        <img id="coin3_tail" class="coin" style="display: none;" src="{% static 'poll/imgs/tail.png' %}"
-                             alt="">
-                        <img id="coin3_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
-                             alt="">
-                        <input id="coin3_checkbox" class="coin-checkbox" type="checkbox" name="3">
-                    </label>
-                </div>
-                <div class="col col-xs-5 col-sm-4 col-md-2">
-                    <label>
-                        &nbsp;4.
-                        <img id="coin4_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
-                        <img id="coin4_tail" class="coin" style="display: none;" src="{% static 'poll/imgs/tail.png' %}"
-                             alt="">
-                        <img id="coin4_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
-                             alt="">
-                        <input id="coin4_checkbox" class="coin-checkbox" type="checkbox" name="4">
-                    </label>
-                </div>
-                <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0">
-                    <label>
-                        &nbsp;5.
-                        <img id="coin5_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
-                        <img id="coin5_tail" class="coin" style="display: none;" src="{% static 'poll/imgs/tail.png' %}"
-                             alt="">
-                        <img id="coin5_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
-                             alt="">
-                        <input id="coin5_checkbox" class="coin-checkbox" type="checkbox" name="5">
-                    </label>
-                </div>
-            </div>
-            <div class="row coin-container">
-                <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-1 col-md-push-2">
-                    <label>
-                        &nbsp;7.
-                        <img id="coin7_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
-                        <img id="coin7_tail" class="coin" style="display: none;" src="{% static 'poll/imgs/tail.png' %}"
-                             alt="">
-                        <img id="coin7_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
-                             alt="">
-                        <input id="coin7_checkbox" class="coin-checkbox" type="checkbox" name="7">
-                    </label>
-                </div>
-                <div class="col col-xs-5 col-sm-4 col-md-2 col-md-push-2">
-                    <label>
-                        &nbsp;8.
-                        <img id="coin8_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
-                        <img id="coin8_tail" class="coin" style="display: none;" src="{% static 'poll/imgs/tail.png' %}"
-                             alt="">
-                        <img id="coin8_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
-                             alt="">
-                        <input id="coin8_checkbox" class="coin-checkbox" type="checkbox" name="8">
-                    </label>
-                </div>
-                <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0 col-md-push-2">
-                    <label>
-                        &nbsp;9.
-                        <img id="coin9_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
-                        <img id="coin9_tail" class="coin" style="display: none;" src="{% static 'poll/imgs/tail.png' %}"
-                             alt="">
-                        <img id="coin9_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
-                             alt="">
-                        <input id="coin9_checkbox" class="coin-checkbox" type="checkbox" name="9">
-                    </label>
-                </div>
-                <div class="col col-xs-5 col-sm-4 col-md-2 col-md-push-2">
-                    <label>
-                        10.
-                        <img id="coin10_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
-                        <img id="coin10_tail" class="coin" style="display: none;"
-                             src="{% static 'poll/imgs/tail.png' %}" alt="">
-                        <img id="coin10_head" class="coin" style="display: none;"
-                             src="{% static 'poll/imgs/head.png' %}"
-                             alt="">
-                        <input id="coin10_checkbox" class="coin-checkbox" type="checkbox" name="10">
-                    </label>
-                </div>
-                <div class="col col-xs-5 col-xs-offset-0 col-xs-pull-0 col-xs-push-6 col-sm-4 col-sm-offset-0 col-md-2 col-md-offset-1 col-md-push-0 col-md-pull-9 an-top-3">
-                    <label>
-                        &nbsp;6.
-                        <img id="coin6_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
-                        <img id="coin6_tail" class="coin" style="display: none;" src="{% static 'poll/imgs/tail.png' %}"
-                             alt="">
-                        <img id="coin6_head" class="coin" style="display: none;" src="{% static 'poll/imgs/head.png' %}"
-                             alt="">
-                        <input id="coin6_checkbox" class="coin-checkbox" type="checkbox" name="6">
-                    </label>
-                </div>
-            </div>
 
-         {% if page.language == "RU" %}
-            Ваш 10-значный код для участия в лотарее. Сохраните или запишите его, чтобы не потерять.
+            <label>
 
-        {% elif  page.language == "UA" %}
-            Ваш 10-значний код для участі у лотареї. Збережіть або запишіть його, щоб не загубити.
+                {% if page.language == "RU" %}
+                    Количество полученyых гербов:
+                {% elif  page.language == "UA" %}
+                    Кількість отриманих гербів:
+                {% endif %}
+                <input type="text"
+                       name="{{heads_size }}"
 
-        {% endif %}
+                       class="customTextField"
+                       onkeypress="this.style.width = ((this.value.length + 1) * 15) + 'px';"
+                       required
+                >
+            </label>
+
+            {% if  lottery_case == "generation" or lottery_case == "both" %}
+
+                <div class="row top-20 coin-container">
+                    <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-1">
+                        <label>
+                            &nbsp;1.
+                            <img id="coin1_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
+                            <img id="coin1_tail" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/tail.png' %}"
+                                 alt="">
+                            <img id="coin1_head" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/head.png' %}"
+                                 alt="">
+                            <input id="coin1_checkbox" class="coin-checkbox" type="checkbox" disabled="disabled"
+                                   name="1">
+                        </label>
+                    </div>
+                    <div class="col col-xs-5 col-sm-4 col-md-2">
+                        <label>
+                            &nbsp;2.
+                            <img id="coin2_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
+                            <img id="coin2_tail" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/tail.png' %}"
+                                 alt="">
+                            <img id="coin2_head" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/head.png' %}"
+                                 alt="">
+                            <input id="coin2_checkbox" class="coin-checkbox" type="checkbox" disabled="disabled"
+                                   name="2">
+                        </label>
+                    </div>
+                    <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0">
+                        <label>
+                            &nbsp;3.
+                            <img id="coin3_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
+                            <img id="coin3_tail" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/tail.png' %}"
+                                 alt="">
+                            <img id="coin3_head" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/head.png' %}"
+                                 alt="">
+                            <input id="coin3_checkbox" class="coin-checkbox" type="checkbox" disabled="disabled"
+                                   name="3">
+                        </label>
+                    </div>
+                    <div class="col col-xs-5 col-sm-4 col-md-2">
+                        <label>
+                            &nbsp;4.
+                            <img id="coin4_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
+                            <img id="coin4_tail" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/tail.png' %}"
+                                 alt="">
+                            <img id="coin4_head" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/head.png' %}"
+                                 alt="">
+                            <input id="coin4_checkbox" class="coin-checkbox" type="checkbox" disabled="disabled"
+                                   name="4">
+                        </label>
+                    </div>
+                    <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0">
+                        <label>
+                            &nbsp;5.
+                            <img id="coin5_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
+                            <img id="coin5_tail" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/tail.png' %}"
+                                 alt="">
+                            <img id="coin5_head" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/head.png' %}"
+                                 alt="">
+                            <input id="coin5_checkbox" class="coin-checkbox" type="checkbox" disabled="disabled"
+                                   name="5">
+                        </label>
+                    </div>
+                </div>
+                <div class="row coin-container">
+                    <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-1 col-md-push-2">
+                        <label>
+                            &nbsp;7.
+                            <img id="coin7_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
+                            <img id="coin7_tail" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/tail.png' %}"
+                                 alt="">
+                            <img id="coin7_head" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/head.png' %}"
+                                 alt="">
+                            <input id="coin7_checkbox" class="coin-checkbox" type="checkbox" disabled="disabled"
+                                   name="7">
+                        </label>
+                    </div>
+                    <div class="col col-xs-5 col-sm-4 col-md-2 col-md-push-2">
+                        <label>
+                            &nbsp;8.
+                            <img id="coin8_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
+                            <img id="coin8_tail" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/tail.png' %}"
+                                 alt="">
+                            <img id="coin8_head" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/head.png' %}"
+                                 alt="">
+                            <input id="coin8_checkbox" class="coin-checkbox" type="checkbox" disabled="disabled"
+                                   name="8">
+                        </label>
+                    </div>
+                    <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-0 col-md-push-2">
+                        <label>
+                            &nbsp;9.
+                            <img id="coin9_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
+                            <img id="coin9_tail" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/tail.png' %}"
+                                 alt="">
+                            <img id="coin9_head" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/head.png' %}"
+                                 alt="">
+                            <input id="coin9_checkbox" class="coin-checkbox" type="checkbox" disabled="disabled"
+                                   name="9">
+                        </label>
+                    </div>
+                    <div class="col col-xs-5 col-sm-4 col-md-2 col-md-push-2">
+                        <label>
+                            10.
+                            <img id="coin10_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
+                            <img id="coin10_tail" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/tail.png' %}" alt="">
+                            <img id="coin10_head" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/head.png' %}"
+                                 alt="">
+                            <input id="coin10_checkbox" class="coin-checkbox" type="checkbox" disabled="disabled"
+                                   name="10">
+                        </label>
+                    </div>
+                    <div class="col col-xs-5 col-xs-offset-0 col-xs-pull-0 col-xs-push-6 col-sm-4 col-sm-offset-0 col-md-2 col-md-offset-1 col-md-push-0 col-md-pull-9 an-top-3">
+                        <label>
+                            &nbsp;6.
+                            <img id="coin6_unknown" class="coin" src="{% static 'poll/imgs/unknown.png' %}" alt="">
+                            <img id="coin6_tail" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/tail.png' %}"
+                                 alt="">
+                            <img id="coin6_head" class="coin" style="display: none;"
+                                 src="{% static 'poll/imgs/head.png' %}"
+                                 alt="">
+                            <input id="coin6_checkbox" class="coin-checkbox" type="checkbox" disabled="disabled"
+                                   name="6">
+                        </label>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if page.language == "RU" %}
+                Ваш 10-значный код для участия в лотарее. Сохраните или запишите его, чтобы не потерять.
+
+            {% elif  page.language == "UA" %}
+                Ваш 10-значний код для участі у лотареї. Збережіть або запишіть його, щоб не загубити.
+
+            {% endif %}
 
             <p class="question-text text-center"> Код: {{ lottery_number }}</p>
 
 
-
             <div class="top-20" style="text-align: center">
 
-                <input id="generate"
-                       type="button"
-                       class="btn"
+                {% if  lottery_case == "generation" or lottery_case == "both" %}
+                    <input id="generate"
+                           type="button"
+                           class="btn"
 
-                        {% if page.language == "UA" %}
-                       value="Згенерувати"
-                        {% elif  page.language == "RU" %}
-                       value="Сгенерировать"
-                        {% endif %}
-                       onclick="generateSequence()">
+                            {% if page.language == "UA" %}
+                           value="Згенерувати"
+                            {% elif  page.language == "RU" %}
+                           value="Сгенерировать"
+                            {% endif %}
+                           onclick="generateSequence()">
+                {% endif %}
 
                 <input id="submitBtn"
                        type="submit"
