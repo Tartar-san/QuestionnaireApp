@@ -96,9 +96,16 @@
                 {% endif %}
                 <input type="text"
                        name="{{ heads_size }}"
-
                        class="customTextField"
                        onkeypress="this.style.width = ((this.value.length + 1) * 15) + 'px';"
+                        {% if page.language == "RU" %}
+                       oninvalid="this.setCustomValidity('Введите количество полученных Гербов в это поле')"
+                       placeholder="Ваш ответ"
+                        {% elif  page.language == "UA" %}
+                       placeholder="Ваша відповідь"
+                       oninvalid="this.setCustomValidity('Введіть кількість отриманих Гербів в дане поле')"
+                        {% endif %}
+                       oninput="setCustomValidity('')"
                        required
                 >
             </label>

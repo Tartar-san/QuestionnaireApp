@@ -32,6 +32,7 @@ function generateSequence() {
         getRandom(0, 2) === 0 ? flipCoin(id, false) : flipCoin(id, true);
     }
     $('#generate').prop('disabled', true).addClass("btn-disabled");
+    setCookiesGenerateTrue();
 }
 
 function setHandler(id) {
@@ -51,6 +52,11 @@ function checkCoins() {
         if (!checkUnknown('coin' + i)) return false;
     }
     return true;
+}
+
+function setCookiesGenerateTrue() {
+    document.cookie = "Generate=true";
+    console.log("generated");
 }
 
 $(document).ready(function () {
