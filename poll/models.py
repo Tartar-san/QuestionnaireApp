@@ -56,6 +56,7 @@ class Question(models.Model):
     ru_text = models.CharField(max_length=500, blank=True)
     page = models.ForeignKey(Page)
     pub_date = models.DateTimeField()
+    column_number = models.IntegerField(null=True)
 
     def __str__(self):
         return str(self.page) + "||| Question number: " + str(self.number) + " " + str(self.id)

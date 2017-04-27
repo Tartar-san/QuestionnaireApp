@@ -23,7 +23,7 @@ class SpreadSheetUpdater:
         self.spreadsheet = gc.open("Антикорупційне опитування")
         self.worksheet = self.spreadsheet.get_worksheet(0)
 
-        questions = Question.objects.all().order_by('number')
+        questions = Question.objects.all().order_by('column_number')
         self.ids_order = [question.id for question in questions]
 
         for i in range(len(questions)):
