@@ -8,6 +8,8 @@ from .google_spreadsheet_extractor import SpreadSheetUpdater
 from .forms import FormWithCaptcha
 import random
 import os
+import time
+
 # Create your views here.
 spreadsheet_updater = SpreadSheetUpdater(filename=os.path.join(settings.STATICFILES_DIRS[0], 'poll/client_secret.json'))
 
@@ -117,6 +119,13 @@ def get_page(request):
     if (page_type == "Starting"):
         return render(request, "Starting.html", context=context)
     elif (page_type == "Login"):
+        get_time = str(time.asctime(time.localtime(time.time())))
+        question_time = Question.objects.get(id=87)
+        get_time_answer = Answer(respondent=respondent,
+                          question=question_time,
+                          text= get_time)
+        get_time_answer.save()
+        spreadsheet_updater.add_answer(str(get_time), question_time.id, respondent.spreadsheet_row)
         return render(request, "Login.html", context=context)
     elif (page_type == "Question"):
         return render(request, "Question.html", context=context)
@@ -153,6 +162,13 @@ def post_answer(request):
         spreadsheet_updater.add_answer(str(respondent.lottery_number), question_lottery_number.id, respondent.spreadsheet_row)
 
     elif (page.type == "Login"):
+        post_time = str(time.asctime(time.localtime(time.time())))
+        question_time = Question.objects.get(id=88)
+        post_time_answer = Answer(respondent=respondent,
+                          question=question_time,
+                          text= post_time)
+        post_time_answer.save()
+        spreadsheet_updater.add_answer(str(post_time), question_time.id, respondent.spreadsheet_row)
         if "Like" in request.COOKIES:
             text_like = request.COOKIES["Like"]
         else:
