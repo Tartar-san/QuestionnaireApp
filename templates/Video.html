@@ -46,11 +46,26 @@
             </div>
         </div>
         <div id="messageContainer" class="message-container center-horizontal">
-            <p class="white">Перегляньте, будь ласка, коротке відео</p>
-            <p class="white">(перед переглядом увімкніть звукові динаміки на Вашому комп'ютері)</p>
+            <p class="white">
+                {% if page.language == "RU" %}
+                                        Просмотрите, пожалуйста, короткое видео
+                {% elif  page.language == "UA" %}
+                                        Перегляньте, будь ласка, коротке відео
+                {% endif %}
+            </p>
+            <p class="white">
+
+                {% if page.language == "RU" %}
+                                        (перед просмотром убедитесь, что звуковые динамики включены и готовы)
+                {% elif  page.language == "UA" %}
+                                        (перед переглядом переконайтеся, що звукові динаміки увімкнені і готові)
+                {% endif %}
+
+
+            </p>
         </div>
         {% if  video.key_name == 'Він заплатив' %}
-                <p class="text-center">copyright 315 films</p>
+                <p class="text-center">                  ©  315film</p>
         {% endif %}
         <form action="/poll/next_page" method="post">
             {% csrf_token %}

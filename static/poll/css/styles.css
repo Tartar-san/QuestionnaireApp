@@ -121,6 +121,11 @@ p.page-text {
     text-align: center;
 }
 
+
+.text-right {
+    text-align: right;
+}
+
 .center-horizontal {
     margin: 0 auto;
 }
