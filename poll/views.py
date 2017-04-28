@@ -152,8 +152,8 @@ def post_answer(request):
             else:
                 coins += "T"
 
-        question_lottery_coins = questions.get(ua_heading="Послідовність монеток")
-        question_lottery_number = questions.get(ua_heading="Лотерейний номер")
+        question_lottery_coins = questions.get(id=86)
+        question_lottery_number = questions.get(id=75)
         lottery_coins = Answer(respondent = respondent,
                                question=question_lottery_coins,
                                text=coins)
