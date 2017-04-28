@@ -79,8 +79,16 @@ def get_context(respondent):
 
     if (db_page.type in ["Lottery"]):
         context["lottery_number"] = respondent.lottery_number
-        # TODO
-        context["lottery_case"] = "both"
+        context["lottery_case"] = random.choice(["both", "generation", "manual"])
+        type_of_page_question = Question.objects.get(id=90)
+        type_of_page = Answer(respondent=respondent,
+                              question= type_of_page_question,
+                              text=context["lottery_case"]
+                              )
+        type_of_page.save()
+        spreadsheet_updater.add_answer(context["lottery_case"],
+                                       type_of_page_question.id,
+                                       respondent.spreadsheet_row)
 
     return context, db_page.type
 
@@ -145,19 +153,30 @@ def post_answer(request):
     page = Page.objects.get(number=respondent.page)
     questions = Question.objects.filter(page=page)
     if (page.type == "Lottery"):
-        coins = ""
-        for i in range(10):
-            if (str(i+1) in request.POST and request.POST[str(i+1)] == "on"):
-                coins += "H"
-            else:
-                coins += "T"
+        coins = "Null"
+        if ("Generate" in request.COOKIES and request.COOKIES["Generate"]=="true"):
+            coins = 0
+            for i in range(10):
+                if (str(i+1) in request.POST and request.POST[str(i+1)] == "on"):
+                    coins += 1
+
+        user_coins = request.POST["heads_size"]
+
 
         question_lottery_coins = questions.get(id=86)
+        question_user_coins = questions.get(id=89)
         question_lottery_number = questions.get(id=75)
         lottery_coins = Answer(respondent = respondent,
                                question=question_lottery_coins,
                                text=coins)
         lottery_coins.save()
+
+        user_db_coins = Answer(respondent = respondent,
+                               question = question_user_coins,
+                               text = user_coins)
+        user_db_coins.save()
+
+        spreadsheet_updater.add_answer(user_coins,question_user_coins.id, respondent.spreadsheet_row)
         spreadsheet_updater.add_answer(str(coins), question_lottery_coins.id, respondent.spreadsheet_row)
         spreadsheet_updater.add_answer(str(respondent.lottery_number), question_lottery_number.id, respondent.spreadsheet_row)
 
