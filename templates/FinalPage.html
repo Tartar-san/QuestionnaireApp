@@ -25,7 +25,13 @@
 <div class="container">
  <div class="jumbotron" style=" background-color: #B4D2D7; ">
 
-     <h1 class="page-heading">{{ page.heading }}</h1>
+     <h1 class="page-heading">{{ page.heading }}
+     {% if page.number == 26 %}
+          <a href='https://www.facebook.com/atlantynespisuyut/?fref=ts'>
+          "Атланти не списують"
+          </a>
+        {% endif %}
+     </h1>
 
 
         <p class="page-text">{{ page.text }}</p>
