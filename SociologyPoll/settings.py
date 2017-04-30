@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     '188.166.9.29',
     'studentintegrity.org',
+    'www.studentintegrity.org',
 ]
 
 
