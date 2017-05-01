@@ -8,6 +8,7 @@ from .models import *
 from .templates import *
 from .google_spreadsheet_extractor import SpreadSheetUpdater
 from .forms import FormWithCaptcha
+from static.poll.scripts.export_all import export
 import random
 import os
 import time
@@ -18,7 +19,7 @@ import sys
 spreadsheet_updater = SpreadSheetUpdater(filename=os.path.join(settings.STATICFILES_DIRS[0], 'poll/client_secret.json'))
 
 def csv_download(request):
-    os.execl(sys.executable, "python3", '/home/sociology/QuestionnaireApp/export_all.py')
+    export()
     wrapper = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.csv'), 'r' , encoding='cp1251')
     response = HttpResponse(content_type='text/csv; charset=windows-1251')
     response['Content-Disposition'] = "attachment; filename=results_of_poll.csv"
