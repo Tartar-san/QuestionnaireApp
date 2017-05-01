@@ -196,6 +196,7 @@ def post_answer(request):
         lottery_number_db = Answer(respondent = respondent,
                                    question = question_lottery_number,
                                    text = str(respondent.lottery_number))
+        lottery_number_db.save()
 
         spreadsheet_updater.add_answer(user_coins,question_user_coins.id, respondent.spreadsheet_row)
         spreadsheet_updater.add_answer(str(coins), question_lottery_coins.id, respondent.spreadsheet_row)
