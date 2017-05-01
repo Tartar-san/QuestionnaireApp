@@ -69,12 +69,12 @@ def get_context(respondent):
         context["captcha_form"] = FormWithCaptcha()
     if (db_page.type in ["Video"]):
         context["video"] = template_video
-        video_answer = Answer(question=db_questions.get(number=171),
+        video_answer = Answer(question=db_questions.get(id=78),
                               respondent=respondent,
                               text=template_video.url)
         video_answer.save()
         spreadsheet_updater.add_answer(template_video.key_name,
-                                       db_questions.get(number=171).id,
+                                       db_questions.get(id=78).id,
                                        respondent.spreadsheet_row)
 
     if (db_page.type in ["Lottery"]):
