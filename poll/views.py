@@ -71,7 +71,7 @@ def get_context(respondent):
         context["video"] = template_video
         video_answer = Answer(question=db_questions.get(id=78),
                               respondent=respondent,
-                              text=template_video.url)
+                              text=template_video.key_name)
         video_answer.save()
         spreadsheet_updater.add_answer(template_video.key_name,
                                        db_questions.get(id=78).id,
