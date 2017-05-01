@@ -30,6 +30,11 @@ def export():
                 else:
                     row[ua_heading] = '"' + text + '"'
             writer.writerow(row)
+            answers.close()
+        respondents.close()
+        questions.close()
+    conn.commit()
+    conn.close()
 
 
 
