@@ -20,7 +20,7 @@ with open('poll.csv', 'w') as csvfile:
         answers = conn.cursor()
         answers.execute('SELECT text, ua_heading FROM poll_answer JOIN poll_question ON poll_answer.question_id = poll_question.id WHERE respondent_id = %s ORDER BY poll_question.column_number' % respondent[0] )
         for text, ua_heading in answers:
-            row[ua_heading] = text
+            row[ua_heading] = '"' + text + '"'
         print(row)
         writer.writerow(row)
 
