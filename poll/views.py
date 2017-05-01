@@ -16,7 +16,7 @@ import time
 spreadsheet_updater = SpreadSheetUpdater(filename=os.path.join(settings.STATICFILES_DIRS[0], 'poll/client_secret.json'))
 
 def csv_download(request):
-    wrapper = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.csv'), 'r')
+    wrapper = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.csv'), 'r', encoding = 'utf-8')
     response = HttpResponse(wrapper, content_type='text/csv')
     #response['Content-Disposition'] = "attachment; filename=results_of_poll.csv"
     return response
