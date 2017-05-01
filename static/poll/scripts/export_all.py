@@ -5,7 +5,7 @@ import time
 
 def export():
 
-    conn = sqlite3.connect('../../../db.sqlite3')
+    conn = sqlite3.connect('/home/sociology/QuestionnaireApp/db.sqlite3')
 
     respondents = conn.cursor()
     respondents.execute('SELECT spreadsheet_row FROM poll_respondent')
@@ -13,7 +13,7 @@ def export():
     questions = conn.cursor()
     questions.execute('SELECT ua_heading FROM poll_question ORDER BY column_number')
 
-    with open('static/poll/poll.csv', 'w', encoding="cp1251") as csvfile:
+    with open('/home/sociology/QuestionnaireApp/static/poll/poll.csv', 'w', encoding="cp1251") as csvfile:
         field_names = ["#"]
         for question in questions:
             if (question[0] not in field_names):
