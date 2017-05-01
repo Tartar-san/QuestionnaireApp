@@ -11,14 +11,23 @@ from .forms import FormWithCaptcha
 import random
 import os
 import time
+import csv
 
 # Create your views here.
 spreadsheet_updater = SpreadSheetUpdater(filename=os.path.join(settings.STATICFILES_DIRS[0], 'poll/client_secret.json'))
 
 def csv_download(request):
-    wrapper = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.csv'), 'r', encoding = 'utf-8')
-    response = HttpResponse(wrapper, content_type='text/csv')
+    wrapper = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.csv'), 'r' , encoding='cp1251')
+    response = HttpResponse(content_type='text/csv; charset=windows-1251')
     response['Content-Disposition'] = "attachment; filename=results_of_poll.csv"
+
+
+    reader = csv.reader(wrapper)
+    writer = csv.writer(response)
+
+    for row in reader:
+        writer.writerow(row)
+
     return response
 
 def skip_not_needed_pages(respondent):
