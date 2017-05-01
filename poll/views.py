@@ -17,6 +17,7 @@ import csv
 spreadsheet_updater = SpreadSheetUpdater(filename=os.path.join(settings.STATICFILES_DIRS[0], 'poll/client_secret.json'))
 
 def csv_download(request):
+    os.system("python /home/sociology/QuestionnaireApp/export_all.py")
     wrapper = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.csv'), 'r' , encoding='cp1251')
     response = HttpResponse(content_type='text/csv; charset=windows-1251')
     response['Content-Disposition'] = "attachment; filename=results_of_poll.csv"
