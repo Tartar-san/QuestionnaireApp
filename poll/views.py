@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render, get_object_or_404
 from django.views.defaults import page_not_found, permission_denied, server_error
 from django.http import HttpResponseRedirect, HttpResponse
