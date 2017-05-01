@@ -12,7 +12,8 @@ questions.execute('SELECT ua_heading FROM poll_question ORDER BY column_number')
 with open('poll.csv', 'w') as csvfile:
     field_names = ["#"]
     for question in questions:
-        field_names.append(question[0])
+        if (question[0] not in field_names):
+            field_names.append(question[0])
     writer = csv.DictWriter(csvfile, fieldnames=field_names)
     writer.writeheader()
     for respondent in respondents:
