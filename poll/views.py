@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.defaults import page_not_found, permission_denied, server_error
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from wsgiref.util import FileWrapper
 from django.conf import settings
 from .models import *
 from .templates import *
@@ -12,6 +13,12 @@ import time
 
 # Create your views here.
 spreadsheet_updater = SpreadSheetUpdater(filename=os.path.join(settings.STATICFILES_DIRS[0], 'poll/client_secret.json'))
+
+def csv_download(request):
+    wrapper = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.csv'), 'r')
+    response = HttpResponse(wrapper, content_type='text/csv')
+    #response['Content-Disposition'] = "attachment; filename=results_of_poll.csv"
+    return response
 
 def skip_not_needed_pages(respondent):
     page = Page.objects.get(number=respondent.page)
