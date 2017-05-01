@@ -5,7 +5,7 @@ import time
 
 def export():
 
-    conn = sqlite3.connect('db.sqlite3')
+    conn = sqlite3.connect('../../../db.sqlite3')
 
     respondents = conn.cursor()
     respondents.execute('SELECT spreadsheet_row FROM poll_respondent')
