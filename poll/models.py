@@ -70,17 +70,35 @@ class Option(models.Model):
     def __str__(self):
         return str(self.question) + "||| Option: " + self.ua_text
 
+class Video(models.Model):
+    key_name = models.CharField(max_length=200)
+    page = models.ForeignKey(Page)
+    url = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.key_name
+
 
 class Respondent(models.Model):
     LANGUAGES = (
         ("UA", "Ukrainian"),
         ("RU", "Russian"),
     )
+    LOTTERY_PAGES = (
+        ("G", "generating"),
+        ("M", "manual"),
+        ("B", "both"),
+    )
     identity = models.CharField(max_length=50)
     language = models.CharField(max_length=20, choices=LANGUAGES, default="UA")
     page = models.IntegerField(default=0)
     spreadsheet_row = models.AutoField(primary_key=True)
     lottery_number = models.CharField(max_length=10, default="0")
+    video = models.ForeignKey(Video, null=True)
+    lottery_page = models.CharField(max_length=10, choices=LOTTERY_PAGES, default="B")
+    lottery_generated = models.CharField(max_length=10, null=True)
+    refreshed_lottery = models.BooleanField(default=False)
+
 
     def __str__(self):
         return "Identity: " + self.identity \
@@ -105,12 +123,4 @@ class Answer(models.Model):
         return "Respondent: " + self.respondent.identity \
                + " Answer: " + self.text
 
-
-class Video(models.Model):
-    key_name = models.CharField(max_length=200)
-    page = models.ForeignKey(Page)
-    url = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.key_name
 

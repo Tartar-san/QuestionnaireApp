@@ -59,16 +59,24 @@ def skip_not_needed_pages(respondent):
 def get_context(respondent):
     # get information from database
     db_page = Page.objects.get(number=respondent.page)
-    db_videos = Video.objects.filter(page=db_page)
+    if (respondent.video is None):
+        db_videos = Video.objects.filter(page=db_page)
+        if (len(db_videos) > 0):
+            random_video = random.choice(db_videos)
+            respondent.video = random_video
+            respondent.save()
+            template_video = TemplateVideo(random_video)
+        else:
+            template_video = None
+    else:
+        template_video = TemplateVideo(respondent.video)
+
+
     db_questions = Question.objects.filter(page=db_page).order_by('number')
 
     # prepare information for template
     template_page = TemplatePage(db_page, respondent.language)
 
-    if (len(db_videos) > 0):
-        template_video = TemplateVideo(random.choice(db_videos))
-    else:
-        template_video = None
 
 
     template_questions = []
@@ -99,7 +107,9 @@ def get_context(respondent):
 
     if (db_page.type in ["Lottery"]):
         context["lottery_number"] = respondent.lottery_number
-        context["lottery_case"] = random.choice(["both", "generation", "manual"])
+        context["lottery_case"] = respondent.lottery_page
+        context["lottery_sequence"] = respondent.lottery_generated
+        context["refreshed"] = respondent.refreshed_lottery
         type_of_page_question = Question.objects.get(id=90)
         type_of_page = Answer(respondent=respondent,
                               question= type_of_page_question,
@@ -117,23 +127,28 @@ def get_page(request):
 
     if (request.session.session_key is None):
         request.session.save()
-
     try:
         # try to get this respondent information
         respondent = Respondent.objects.get(identity=request.session.session_key)
     except:
         # generate unique lottery number first
         lottery_number = ""
+        lottery_sequence = ""
+        lottery_page = random.choice(["generating", "manual", "both"])
         for i in range(10):
             lottery_number += random.choice('0123456789')
+            lottery_sequence += random.choice('01')
 
         while Respondent.objects.filter(lottery_number=lottery_number).count() != 0:
             lottery_number = ""
             for i in range(10):
                 lottery_number += random.choice('0123456789')
 
+
+
         # create session in db
-        respondent = Respondent(identity=request.session.session_key, page=1, lottery_number=lottery_number)
+        respondent = Respondent(identity=request.session.session_key, page=1, lottery_number=lottery_number,
+                                lottery_generated=lottery_sequence, lottery_page=lottery_page, refreshed_lottery=False)
         respondent.save()
         spreadsheet_updater.add_respondent(respondent.spreadsheet_row)
 
@@ -160,6 +175,8 @@ def get_page(request):
     elif (page_type == "Video"):
         return render(request, "Video.html", context=context)
     elif (page_type == "Lottery"):
+        respondent.refreshed_lottery = False
+        respondent.save()
         return render(request, "Lottery.html", context=context)
     elif (page_type == "FinalPage"):
         return render(request, "FinalPage.html", context=context)
