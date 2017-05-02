@@ -26,10 +26,13 @@ function getRandom(min, max) {
 }
 
 function generateSequence() {
+    var seq = $('.coin-container').first().attr('data-value');
     for (var i = 1; i < 11; i++) {
         var id = 'coin' + i;
         if (!checkUnknown(id)) hideUnknown(id);
-        getRandom(0, 2) === 0 ? flipCoin(id, false) : flipCoin(id, true);
+        seq.substr(i-1, 1) === "0"? flipCoin(id, false) : flipCoin(id, true);
+        // getRandom(0, 2) === 0 ? flipCoin(id, false) : flipCoin(id, true);
+
     }
     $('#generate').prop('disabled', true).addClass("btn-disabled");
     setCookiesGenerateTrue();
