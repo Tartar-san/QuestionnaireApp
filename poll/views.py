@@ -112,7 +112,7 @@ def get_context(respondent, request):
         context["lottery_case"] = respondent.lottery_page
         context["lottery_sequence"] = respondent.lottery_generated
         context["refreshed"] = respondent.refreshed_lottery
-        if (respondent.refreshed_lottery != False):
+        if (respondent.refreshed_lottery == False):
             type_of_page_question = Question.objects.get(id=90)
             type_of_page = Answer(respondent=respondent,
                                   question= type_of_page_question,
