@@ -34,14 +34,15 @@ def csv_download(request):
     for row in reader:
         writer.writerow(row)
     """
-    file = StringIO()
+    io = StringIO()
     df = pb.read_csv('/home/sociology/QuestionnaireApp/static/poll/poll.csv', encoding="cp1251")
-    writer = pb.ExcelWriter(file)
+    writer = pb.ExcelWriter('temp.xlsx')
+    writer.book.filename = io
     df.to_excel(writer,'Poll', index=False)
     writer.save()
     writer.close()
 
-    response = HttpResponse(file.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response = HttpResponse(io.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=poll.xlsx'
     return response
 
