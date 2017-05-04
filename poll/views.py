@@ -112,16 +112,6 @@ def get_context(respondent, request):
         context["lottery_case"] = respondent.lottery_page
         context["lottery_sequence"] = respondent.lottery_generated
         context["refreshed"] = respondent.refreshed_lottery
-        if (respondent.refreshed_lottery == False):
-            type_of_page_question = Question.objects.get(id=90)
-            type_of_page = Answer(respondent=respondent,
-                                  question= type_of_page_question,
-                                  text=context["lottery_case"]
-                                  )
-            type_of_page.save()
-            spreadsheet_updater.add_answer(context["lottery_case"],
-                                           type_of_page_question.id,
-                                           respondent.spreadsheet_row)
 
     return context, db_page.type
 
@@ -153,8 +143,17 @@ def get_page(request):
         respondent = Respondent(identity=request.session.session_key, page=1, lottery_number=lottery_number,
                                 lottery_generated=lottery_sequence, lottery_page=lottery_page, refreshed_lottery=False)
         respondent.save()
-        spreadsheet_updater.add_respondent(respondent.spreadsheet_row)
+        type_of_page_question = Question.objects.get(id=90)
+        type_of_page = Answer(respondent=respondent,
+                              question=type_of_page_question,
+                              text=lottery_page
+                              )
+        type_of_page.save()
 
+        spreadsheet_updater.add_respondent(respondent.spreadsheet_row)
+        spreadsheet_updater.add_answer(lottery_page,
+                                   type_of_page_question.id,
+                                   respondent.spreadsheet_row)
 
     # skip pages until the one respondent should see
     while skip_not_needed_pages(respondent):
