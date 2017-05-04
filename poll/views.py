@@ -42,7 +42,7 @@ def csv_download(request):
     writer.save()
     writer.close()
 
-    response = HttpResponse(io.read(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response = HttpResponse(io.getvalue(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=poll.xlsx'
     return response
 
