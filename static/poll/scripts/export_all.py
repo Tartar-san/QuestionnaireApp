@@ -14,7 +14,7 @@ def export():
     questions = conn.cursor()
     questions.execute('SELECT ua_heading FROM poll_question ORDER BY column_number')
 
-    with open('/home/sociology/QuestionnaireApp/static/poll/poll.csv', 'w', encoding="cp1251") as csvfile:
+    with open('/home/sociology/QuestionnaireApp/poll.csv', 'w', encoding="cp1251") as csvfile:
         field_names = ["#"]
         for question in questions:
             if (question[0] not in field_names):

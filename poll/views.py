@@ -36,7 +36,7 @@ def csv_download(request):
     """
     output = io.BytesIO()
 
-    df = pb.read_csv('/home/sociology/QuestionnaireApp/static/poll/poll.csv', encoding="cp1251")
+    df = pb.read_csv('/home/sociology/QuestionnaireApp/poll.csv', encoding="cp1251")
     writer = pb.ExcelWriter(output, engine='xlsxwriter')
     df.to_excel(writer,'Poll', index=False)
     writer.save()
