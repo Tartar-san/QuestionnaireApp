@@ -9,7 +9,7 @@ def export():
     conn = sqlite3.connect('/home/sociology/QuestionnaireApp/db.sqlite3', uri=True)
 
     respondents = conn.cursor()
-    respondents.execute('SELECT spreadsheet_row FROM poll_respondent')
+    respondents.execute('SELECT spreadsheet_row FROM poll_respondent ORDER BY spreadsheet_row')
 
     questions = conn.cursor()
     questions.execute('SELECT ua_heading FROM poll_question ORDER BY column_number')
