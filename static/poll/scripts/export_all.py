@@ -18,7 +18,7 @@ def export():
         for question in questions:
             if (question[0] not in field_names):
                 field_names.append(question[0])
-        writer = csv.DictWriter(csvfile, fieldnames=field_names)
+        writer = csv.DictWriter(csvfile, fieldnames=field_names, delimiter=";")
         writer.writeheader()
         for respondent in respondents:
             row = {"#": respondent[0]}

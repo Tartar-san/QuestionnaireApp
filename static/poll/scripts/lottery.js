@@ -69,6 +69,7 @@ function getCookie(name) {
 }
 
 $(document).ready(function () {
+    //
     // console.log(getCookie("Generate"));
 
     for (var i = 1; i < 11; i++) {
