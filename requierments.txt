@@ -1,4 +1,4 @@
 django-recaptcha
 oauth2client
 gspread
-panda
+pandas

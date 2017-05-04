@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import sqlite3
 import csv
+import pandas as pb
 import time
 
 def export():
@@ -35,9 +36,8 @@ def export():
         questions.close()
     conn.commit()
     conn.close()
-
-
-
-
-
+    df = pb.read_csv('/home/sociology/QuestionnaireApp/static/poll/poll.csv')
+    writer = pb.ExcelWriter('/home/sociology/QuestionnaireApp/static/poll/poll.xlsx')
+    df.to_excel(writer, 'Poll')
+    writer.save()
 
