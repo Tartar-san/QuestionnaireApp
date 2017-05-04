@@ -77,7 +77,9 @@ $(document).ready(function () {
     }
 
     $('#mainForm').submit(function () {
-        if ($("#generate").length && !checkCoins()) return false;
+        var lotteryCase = $('body').first().attr('data-case');
+        if( (lotteryCase ==="generate" || lotteryCase ==="G") && !checkCoins()) return false;
+        // if ($("#generate").length && !checkCoins()) return false;
         if (!$('#mainForm')[0].checkValidity())return false;
     });
 

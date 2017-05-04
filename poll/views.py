@@ -59,6 +59,7 @@ def skip_not_needed_pages(respondent):
 def get_context(respondent, request):
     # get information from database
     db_page = Page.objects.get(number=respondent.page)
+    db_questions = Question.objects.filter(page=db_page).order_by('number')
     if (respondent.video is None):
         db_videos = Video.objects.filter(page=db_page)
         if (len(db_videos) > 0):
@@ -66,13 +67,17 @@ def get_context(respondent, request):
             respondent.video = random_video
             respondent.save()
             template_video = TemplateVideo(random_video)
+            video_answer = Answer(question=db_questions.get(id=78),
+                                  respondent=respondent,
+                                  text=template_video.key_name)
+            video_answer.save()
+            spreadsheet_updater.add_answer(template_video.key_name,
+                                           db_questions.get(id=78).id,
+                                           respondent.spreadsheet_row)
         else:
             template_video = None
     else:
         template_video = TemplateVideo(respondent.video)
-
-
-    db_questions = Question.objects.filter(page=db_page).order_by('number')
 
     # prepare information for template
     template_page = TemplatePage(db_page, respondent.language)
@@ -97,13 +102,7 @@ def get_context(respondent, request):
         context["captcha_form"] = FormWithCaptcha()
     if (db_page.type in ["Video"]):
         context["video"] = template_video
-        video_answer = Answer(question=db_questions.get(id=78),
-                              respondent=respondent,
-                              text=template_video.key_name)
-        video_answer.save()
-        spreadsheet_updater.add_answer(template_video.key_name,
-                                       db_questions.get(id=78).id,
-                                       respondent.spreadsheet_row)
+
 
     if (db_page.type in ["Lottery"]):
         if "Generate" in request.COOKIES and request.COOKIES["Generate"] == "true":
@@ -113,15 +112,6 @@ def get_context(respondent, request):
         context["lottery_case"] = respondent.lottery_page
         context["lottery_sequence"] = respondent.lottery_generated
         context["refreshed"] = respondent.refreshed_lottery
-        type_of_page_question = Question.objects.get(id=90)
-        type_of_page = Answer(respondent=respondent,
-                              question= type_of_page_question,
-                              text=context["lottery_case"]
-                              )
-        type_of_page.save()
-        spreadsheet_updater.add_answer(context["lottery_case"],
-                                       type_of_page_question.id,
-                                       respondent.spreadsheet_row)
 
     return context, db_page.type
 
@@ -153,8 +143,17 @@ def get_page(request):
         respondent = Respondent(identity=request.session.session_key, page=1, lottery_number=lottery_number,
                                 lottery_generated=lottery_sequence, lottery_page=lottery_page, refreshed_lottery=False)
         respondent.save()
-        spreadsheet_updater.add_respondent(respondent.spreadsheet_row)
+        type_of_page_question = Question.objects.get(id=90)
+        type_of_page = Answer(respondent=respondent,
+                              question=type_of_page_question,
+                              text=lottery_page
+                              )
+        type_of_page.save()
 
+        spreadsheet_updater.add_respondent(respondent.spreadsheet_row)
+        spreadsheet_updater.add_answer(lottery_page,
+                                   type_of_page_question.id,
+                                   respondent.spreadsheet_row)
 
     # skip pages until the one respondent should see
     while skip_not_needed_pages(respondent):
@@ -167,7 +166,12 @@ def get_page(request):
     elif (page_type == "Login"):
         get_time = str(time.asctime(time.localtime(time.time())))
         question_time = Question.objects.get(id=87)
-        get_time_answer = Answer(respondent=respondent,
+        if (Answer.objects.filter(question = question_time,
+                               respondent = respondent).count() > 0):
+            get_time_answer = Answer.objects.get(respondent=respondent, question=question_time)
+            get_time_answer.text = get_time
+        else:
+            get_time_answer = Answer(respondent=respondent,
                           question=question_time,
                           text= get_time)
         get_time_answer.save()

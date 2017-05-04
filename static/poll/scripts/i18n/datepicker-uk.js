@@ -14,7 +14,7 @@
 }( function( datepicker ) {
 
 datepicker.regional.uk = {
-	closeText: "Закрити",
+	closeText: "Підтвердити",
 	prevText: "&#x3C;",
 	nextText: "&#x3E;",
 	currentText: "Сьогодні",

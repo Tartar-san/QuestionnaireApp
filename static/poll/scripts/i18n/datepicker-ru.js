@@ -13,7 +13,7 @@
 }( function( datepicker ) {
 
 datepicker.regional.ru = {
-	closeText: "Закрыть",
+	closeText: "Подтвердить",
 	prevText: "&#x3C;Пред",
 	nextText: "След&#x3E;",
 	currentText: "Сегодня",
