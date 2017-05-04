@@ -2,7 +2,7 @@
 import sqlite3
 import csv
 import time
-#import pandas as pb
+import pandas as pb
 
 def export():
 
