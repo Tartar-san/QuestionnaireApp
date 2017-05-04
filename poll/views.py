@@ -32,7 +32,7 @@ def csv_download(request):
     for row in reader:
         writer.writerow(row)
     """
-    data = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.xlsx', encoding='utf-8')).read()
+    data = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.xlsx'), encoding='utf-8').read()
     response = HttpResponse(data, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=poll.xlsx'
     return response
