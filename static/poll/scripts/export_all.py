@@ -19,7 +19,7 @@ def export():
         for question in questions:
             if (question[0] not in field_names):
                 field_names.append(question[0])
-        writer = csv.DictWriter(csvfile, fieldnames=field_names, delimiter=";")
+        writer = csv.DictWriter(csvfile, fieldnames=field_names)
         writer.writeheader()
         for respondent in respondents:
             row = {"#": respondent[0]}
@@ -36,7 +36,7 @@ def export():
         questions.close()
     conn.commit()
     conn.close()
-    df = pb.read_csv('/home/sociology/QuestionnaireApp/static/poll/poll.csv')
+    df = pb.read_csv('/home/sociology/QuestionnaireApp/static/poll/poll.csv', encoding="cp1251")
     writer = pb.ExcelWriter('/home/sociology/QuestionnaireApp/static/poll/poll.xlsx')
     df.to_excel(writer, 'Poll')
     writer.save()
