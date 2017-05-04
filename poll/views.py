@@ -20,6 +20,7 @@ spreadsheet_updater = SpreadSheetUpdater(filename=os.path.join(settings.STATICFI
 
 def csv_download(request):
     export()
+    """
     wrapper = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.csv'), 'r' , encoding='cp1251')
     response = HttpResponse(content_type='text/csv; charset=windows-1251')
     response['Content-Disposition'] = "attachment; filename=results_of_poll.csv"
@@ -30,7 +31,10 @@ def csv_download(request):
 
     for row in reader:
         writer.writerow(row)
-
+    """
+    data = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.xlsx')).read()
+    response = HttpResponse(data, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename=poll.xlsx'
     return response
 
 def skip_not_needed_pages(respondent):
