@@ -56,7 +56,7 @@ def skip_not_needed_pages(respondent):
     return False
 
 
-def get_context(respondent):
+def get_context(respondent, request):
     # get information from database
     db_page = Page.objects.get(number=respondent.page)
     db_questions = Question.objects.filter(page=db_page).order_by('number')
@@ -105,6 +105,9 @@ def get_context(respondent):
 
 
     if (db_page.type in ["Lottery"]):
+        if "Generate" in request.COOKIES and request.COOKIES["Generate"] == "true":
+            respondent.refreshed_lottery = True
+            respondent.save()
         context["lottery_number"] = respondent.lottery_number
         context["lottery_case"] = respondent.lottery_page
         context["lottery_sequence"] = respondent.lottery_generated
@@ -157,7 +160,7 @@ def get_page(request):
     while skip_not_needed_pages(respondent):
         pass
 
-    context, page_type = get_context(respondent)
+    context, page_type = get_context(respondent, request)
 
     if (page_type == "Starting"):
         return render(request, "Starting.html", context=context)
@@ -180,8 +183,9 @@ def get_page(request):
     elif (page_type == "Video"):
         return render(request, "Video.html", context=context)
     elif (page_type == "Lottery"):
-        respondent.refreshed_lottery = True
-        respondent.save()
+        #if "Generate" in request.COOKIES and request.COOKIES["Generate"] == "true":
+        #    respondent.refreshed_lottery = True
+         #   respondent.save()
         return render(request, "Lottery.html", context=context)
     elif (page_type == "FinalPage"):
         return render(request, "FinalPage.html", context=context)

@@ -62,7 +62,15 @@ function setCookiesGenerateTrue() {
     console.log("generated");
 }
 
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
 $(document).ready(function () {
+    // console.log(getCookie("Generate"));
+
     for (var i = 1; i < 11; i++) {
         setHandler('coin' + i);
     }

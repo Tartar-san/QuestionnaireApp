@@ -33,20 +33,22 @@
         <h1 class="page-heading">{{ page.heading }}</h1>
         <p class="page-text">{{ page.text }} </p>
 
+{#         <div>{{ refreshed }}</div>#}
+
         {% if page.language == "RU" %}
             {#            По Вашему желанию вы можете выбрать способ участия в данном розыгрыше:#}
             Для участия в розыгрше следует выполнить следующие действия
-            {% if  lottery_case == "both" %}
+            {% if  lottery_case == "both" or lottery_case == "B"%}
 
                 (на выбор)
             {% endif %}
             :
 
-            {% if  lottery_case != "generation" %}
+            {% if  lottery_case != "generation" or lottery_case != "G"%}
                 <br>- Просим Вас подбросить монетку 10 раз и записать количество полученных Гербов в соответствующем
                 поле
             {% endif %}
-            {% if  lottery_case == "generation" or lottery_case == "both" %}
+            {% if  lottery_case == "generation" or lottery_case == "G" or lottery_case == "both" or lottery_case == "B"%}
                 <br>- Нажать кнопку "Сгенерировать", которая автоматически случайным образом выставит сгенерированную
                 последовательность. После записать количество полученных Гербов в соответствующем поле
             {% endif %}
@@ -59,17 +61,17 @@
         {% elif  page.language == "UA" %}
             {#            За Вашим бажанням ви можете вибрати спосіб участі:#}
             Для участі у розіграші слід виконати наступні дії
-            {% if  lottery_case == "both" %}
+            {% if  lottery_case == "both" or lottery_case == "B" %}
                 (на вибір)
             {% endif %}
             :
 
-            {% if  lottery_case != "generation" %}
+            {% if  lottery_case != "generation" or lottery_case != "G" %}
                 <br>- Просимо підкинути монетку 10 разів і записати отриману кількість Гербів у відповідному полі
             {% endif %}
 
 
-            {% if  lottery_case == "generation" or lottery_case == "both" %}
+            {% if  lottery_case == "generation" or lottery_case == "G" or lottery_case == "both" or lottery_case == "B" %}
                 <br>- Натиснути кнопку "Згенерувати", яка автоматично випадковим чином виставить згенеровану
                 послідовність. Після записати кількість отриманих Гербів у відповідному полі
             {% endif %}
@@ -111,7 +113,7 @@
                 >
             </label>
 
-            {% if  lottery_case == "generation" or lottery_case == "both" %}
+            {% if  lottery_case == "generation" or lottery_case == "G" or lottery_case == "both" or lottery_case == "B" %}
 
                 <div class="row top-20 coin-container" data-value="{{ lottery_sequence }}">
                     <div class="col col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 col-md-2 col-md-offset-1">
@@ -435,7 +437,7 @@
 
             <div class="top-20" style="text-align: center">
 
-                {% if  lottery_case == "generation" or lottery_case == "both" %}
+                {% if   lottery_case == "generation" or lottery_case == "G" or lottery_case == "both" or lottery_case == "B" %}
                     <input id="generate"
                            type="button"
                            class="btn"
