@@ -37,10 +37,10 @@ def export():
     conn.commit()
     conn.close()
 
-    # df = pb.read_csv('/home/sociology/QuestionnaireApp/static/poll/poll.csv', encoding="cp1251")
-    # writer = pb.ExcelWriter('/home/sociology/QuestionnaireApp/static/poll/poll.xlsx')
-    # df.to_excel(writer,'Poll')
-    # writer.save()
+    df = pb.read_csv('/home/sociology/QuestionnaireApp/static/poll/poll.csv', encoding="cp1251")
+    writer = pb.ExcelWriter('/home/sociology/QuestionnaireApp/static/poll/poll.xlsx')
+    df.to_excel(writer,'Poll')
+    writer.save()
 
 if __name__ == "__main__":
     export()
