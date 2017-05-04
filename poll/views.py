@@ -15,7 +15,7 @@ import time
 import csv
 import sys
 import pandas as pb
-from io import StringIO
+import io
 
 # Create your views here.
 spreadsheet_updater = SpreadSheetUpdater(filename=os.path.join(settings.STATICFILES_DIRS[0], 'poll/client_secret.json'))
@@ -34,15 +34,15 @@ def csv_download(request):
     for row in reader:
         writer.writerow(row)
     """
-    io = StringIO()
+    output = io.BytesIO()
+
     df = pb.read_csv('/home/sociology/QuestionnaireApp/static/poll/poll.csv', encoding="cp1251")
-    writer = pb.ExcelWriter('/home/sociology/QuestionnaireApp/static/poll/poll.xlsx')
-    writer.book.filename = io
+    writer = pb.ExcelWriter(output, engine='xlsxwriter')
     df.to_excel(writer,'Poll', index=False)
     writer.save()
     writer.close()
 
-    response = HttpResponse(io.getvalue(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response = HttpResponse(output.getvalue(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=poll.xlsx'
     return response
 
