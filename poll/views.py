@@ -14,24 +14,35 @@ import os
 import time
 import csv
 import sys
+import pandas as pb
+import io
 
 # Create your views here.
 spreadsheet_updater = SpreadSheetUpdater(filename=os.path.join(settings.STATICFILES_DIRS[0], 'poll/client_secret.json'))
 
 def csv_download(request):
     export()
-    # wrapper = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.csv'), 'r' , encoding='cp1251')
-    # response = HttpResponse(content_type='text/csv; charset=windows-1251')
-    # response['Content-Disposition'] = "attachment; filename=results_of_poll.csv"
-    #
-    # reader = csv.reader(wrapper)
-    # writer = csv.writer(response)
-    #
-    # for row in reader:
-    #     writer.writerow(row)
+    """
+    wrapper = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.csv'), 'r' , encoding='cp1251')
+    response = HttpResponse(content_type='text/csv; charset=windows-1251')
+    response['Content-Disposition'] = "attachment; filename=results_of_poll.csv"
 
-    data = open(os.path.join(settings.STATICFILES_DIRS[0], 'poll/poll.xlsx'), 'r').read()
-    response = HttpResponse(data, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+    reader = csv.reader(wrapper)
+    writer = csv.writer(response)
+
+    for row in reader:
+        writer.writerow(row)
+    """
+    output = io.BytesIO()
+
+    df = pb.read_csv('/home/sociology/QuestionnaireApp/poll.csv', encoding="cp1251")
+    writer = pb.ExcelWriter(output, engine='xlsxwriter')
+    df.to_excel(writer,'Poll', index=False)
+    writer.save()
+    writer.close()
+
+    response = HttpResponse(output.getvalue(), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = 'attachment; filename=poll.xlsx'
     return response
 
@@ -166,9 +177,7 @@ def get_page(request):
     if (page_type == "Starting"):
         return render(request, "Starting.html", context=context)
     elif (page_type == "Login"):
-        os.environ['TZ'] = 'EET'
-        # ad-hoc solution for time difference (UKRAINE [EET]summer[EEST] {local test showed that os.environ['TZ'] = 'EEST' does not work})
-        get_time = str( time.asctime (time.localtime ( time.time() ) ) )
+        get_time = str(time.asctime(time.localtime(time.time())))
         question_time = Question.objects.get(id=87)
         if (Answer.objects.filter(question = question_time,
                                respondent = respondent).count() > 0):
@@ -235,15 +244,13 @@ def post_answer(request):
         spreadsheet_updater.add_answer(str(respondent.lottery_number), question_lottery_number.id, respondent.spreadsheet_row)
 
     elif (page.type == "Login"):
-        # ad-hoc solution for time difference (UKRAINE [EET]summer[EEST] {local test showed that os.environ['TZ'] = 'EEST' does not work})
-        os.environ['TZ'] = 'EET'
-        post_time = str( time.asctime ( time.localtime(time.time() ) ) )
+        post_time = str(time.asctime(time.localtime(time.time())))
         question_time = Question.objects.get(id=88)
         post_time_answer = Answer(respondent=respondent,
-                          question=question_time ,
-                          text= post_time )
+                          question=question_time,
+                          text= post_time)
         post_time_answer.save()
-        spreadsheet_updater.add_answer(str(post_time ), question_time.id, respondent.spreadsheet_row)
+        spreadsheet_updater.add_answer(str(post_time), question_time.id, respondent.spreadsheet_row)
         if "Like" in request.COOKIES:
             text_like = request.COOKIES["Like"]
         else:

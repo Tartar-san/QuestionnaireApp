@@ -2,3 +2,5 @@ django-recaptcha
 oauth2client
 gspread
 pandas
+xlsxwriter
+openpyxl

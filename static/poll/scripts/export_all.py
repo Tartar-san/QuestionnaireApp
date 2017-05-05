@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 import sqlite3
 import csv
-import pandas as pb
 import time
+import pandas as pb
 
 def export():
 
-    conn = sqlite3.connect('/home/sociology/QuestionnaireApp/db.sqlite3')
+    conn = sqlite3.connect('/home/sociology/QuestionnaireApp/db.sqlite3', uri=True)
 
     respondents = conn.cursor()
-    respondents.execute('SELECT spreadsheet_row FROM poll_respondent')
+    respondents.execute('SELECT spreadsheet_row FROM poll_respondent ORDER BY spreadsheet_row')
 
     questions = conn.cursor()
     questions.execute('SELECT ua_heading FROM poll_question ORDER BY column_number')
 
-    with open('/home/sociology/QuestionnaireApp/static/poll/poll.csv', 'w', encoding="cp1251") as csvfile:
+    with open('/home/sociology/QuestionnaireApp/poll.csv', 'w', encoding="cp1251") as csvfile:
         field_names = ["#"]
         for question in questions:
             if (question[0] not in field_names):
@@ -36,8 +36,10 @@ def export():
         questions.close()
     conn.commit()
     conn.close()
-    df = pb.read_csv('/home/sociology/QuestionnaireApp/static/poll/poll.csv', encoding="cp1251")
-    writer = pb.ExcelWriter('/home/sociology/QuestionnaireApp/static/poll/poll.xlsx')
-    df.to_excel(writer, 'Poll')
-    writer.save()
+
+
+if __name__ == "__main__":
+    export()
+
+
 
