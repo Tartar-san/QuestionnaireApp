@@ -166,7 +166,9 @@ def get_page(request):
     if (page_type == "Starting"):
         return render(request, "Starting.html", context=context)
     elif (page_type == "Login"):
-        get_time = str(time.asctime(time.localtime(time.time())))
+        os.environ['TZ'] = 'EET'
+        # ad-hoc solution for time difference (UKRAINE [EET]summer[EEST] {local test showed that os.environ['TZ'] = 'EEST' does not work})
+        get_time = str( time.asctime (time.localtime ( time.time() ) ) )
         question_time = Question.objects.get(id=87)
         if (Answer.objects.filter(question = question_time,
                                respondent = respondent).count() > 0):
@@ -233,13 +235,15 @@ def post_answer(request):
         spreadsheet_updater.add_answer(str(respondent.lottery_number), question_lottery_number.id, respondent.spreadsheet_row)
 
     elif (page.type == "Login"):
-        post_time = str(time.asctime(time.localtime(time.time())))
+        # ad-hoc solution for time difference (UKRAINE [EET]summer[EEST] {local test showed that os.environ['TZ'] = 'EEST' does not work})
+        os.environ['TZ'] = 'EET'
+        post_time = str( time.asctime ( time.localtime(time.time() ) ) )
         question_time = Question.objects.get(id=88)
         post_time_answer = Answer(respondent=respondent,
-                          question=question_time,
-                          text= post_time)
+                          question=question_time ,
+                          text= post_time )
         post_time_answer.save()
-        spreadsheet_updater.add_answer(str(post_time), question_time.id, respondent.spreadsheet_row)
+        spreadsheet_updater.add_answer(str(post_time ), question_time.id, respondent.spreadsheet_row)
         if "Like" in request.COOKIES:
             text_like = request.COOKIES["Like"]
         else:
