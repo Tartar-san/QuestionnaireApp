@@ -177,6 +177,9 @@ def get_page(request):
     if (page_type == "Starting"):
         return render(request, "Starting.html", context=context)
     elif (page_type == "Login"):
+        # ad-hoc solution for time difference (UKRAINE [EET]summer[EEST] {local test showed that os.environ['TZ'] = 'EEST' does not work})
+        os.environ['TZ'] = 'EET'
+
         get_time = str(time.asctime(time.localtime(time.time())))
         question_time = Question.objects.get(id=87)
         if (Answer.objects.filter(question = question_time,
@@ -244,6 +247,8 @@ def post_answer(request):
         spreadsheet_updater.add_answer(str(respondent.lottery_number), question_lottery_number.id, respondent.spreadsheet_row)
 
     elif (page.type == "Login"):
+        # ad-hoc solution for time difference (UKRAINE [EET]summer[EEST] {local test showed that os.environ['TZ'] = 'EEST' does not work})
+        os.environ['TZ'] = 'EET'
         post_time = str(time.asctime(time.localtime(time.time())))
         question_time = Question.objects.get(id=88)
         post_time_answer = Answer(respondent=respondent,
