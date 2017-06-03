@@ -18,7 +18,7 @@ import pandas as pb
 import io
 
 # Create your views here.
-spreadsheet_updater = SpreadSheetUpdater(filename=os.path.join(settings.STATICFILES_DIRS[0], 'poll/client_secret.json'))
+#spreadsheet_updater = SpreadSheetUpdater(filename=os.path.join(settings.STATICFILES_DIRS[0], 'poll/client_secret.json'))
 
 def csv_download(request):
     export()
@@ -36,7 +36,7 @@ def csv_download(request):
     """
     output = io.BytesIO()
 
-    df = pb.read_csv('/home/sociology/QuestionnaireApp/poll.csv', encoding="cp1251")
+    df = pb.read_csv('/home/sociology/QuestionnaireApp/poll.csv', encoding="utf-8")
     writer = pb.ExcelWriter(output, engine='xlsxwriter')
     df.to_excel(writer,'Poll', index=False)
     writer.save()
@@ -242,9 +242,9 @@ def post_answer(request):
                                    text = str(respondent.lottery_number))
         lottery_number_db.save()
 
-        spreadsheet_updater.add_answer(user_coins,question_user_coins.id, respondent.spreadsheet_row)
-        spreadsheet_updater.add_answer(str(coins), question_lottery_coins.id, respondent.spreadsheet_row)
-        spreadsheet_updater.add_answer(str(respondent.lottery_number), question_lottery_number.id, respondent.spreadsheet_row)
+        #spreadsheet_updater.add_answer(user_coins,question_user_coins.id, respondent.spreadsheet_row)
+        #spreadsheet_updater.add_answer(str(coins), question_lottery_coins.id, respondent.spreadsheet_row)
+        #spreadsheet_updater.add_answer(str(respondent.lottery_number), question_lottery_number.id, respondent.spreadsheet_row)
 
     elif (page.type == "Login"):
         # ad-hoc solution for time difference (UKRAINE [EET]summer[EEST] {local test showed that os.environ['TZ'] = 'EEST' does not work})
@@ -265,7 +265,7 @@ def post_answer(request):
                              question=question_like,
                              text=text_like)
         answer_like.save()
-        spreadsheet_updater.add_answer(str(text_like), question_like.id, respondent.spreadsheet_row)
+        #spreadsheet_updater.add_answer(str(text_like), question_like.id, respondent.spreadsheet_row)
         #shared = request.POST["Shared"] == "true"
     else:
         if (page.type == "Starting"):
@@ -277,7 +277,7 @@ def post_answer(request):
          # some questions could have several answers
             user_answer = request.POST.getlist(str(question.id))
             print(question.id)
-            spreadsheet_updater.add_answer(str(user_answer), question.id, respondent.spreadsheet_row)
+            #spreadsheet_updater.add_answer(str(user_answer), question.id, respondent.spreadsheet_row)
             for option in user_answer:
                 # allow user to choose preferred language
                 if (question.type=="LanguageChoosing"):
