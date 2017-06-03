@@ -84,9 +84,9 @@ def get_context(respondent, request):
                                   respondent=respondent,
                                   text=template_video.key_name)
             video_answer.save()
-            spreadsheet_updater.add_answer(template_video.key_name,
-                                           db_questions.get(id=78).id,
-                                           respondent.spreadsheet_row)
+       #     spreadsheet_updater.add_answer(template_video.key_name,
+        #                                   db_questions.get(id=78).id,
+         #                                  respondent.spreadsheet_row)
         else:
             template_video = None
     else:
@@ -163,10 +163,10 @@ def get_page(request):
                               )
         type_of_page.save()
 
-        spreadsheet_updater.add_respondent(respondent.spreadsheet_row)
-        spreadsheet_updater.add_answer(lottery_page,
-                                   type_of_page_question.id,
-                                   respondent.spreadsheet_row)
+       # spreadsheet_updater.add_respondent(respondent.spreadsheet_row)
+       # spreadsheet_updater.add_answer(lottery_page,
+        #                           type_of_page_question.id,
+         #                          respondent.spreadsheet_row)
 
     # skip pages until the one respondent should see
     while skip_not_needed_pages(respondent):
@@ -191,7 +191,7 @@ def get_page(request):
                           question=question_time,
                           text= get_time)
         get_time_answer.save()
-        spreadsheet_updater.add_answer(str(get_time), question_time.id, respondent.spreadsheet_row)
+       # spreadsheet_updater.add_answer(str(get_time), question_time.id, respondent.spreadsheet_row)
         return render(request, "Login.html", context=context)
     elif (page_type == "Question"):
         return render(request, "Question.html", context=context)
@@ -255,7 +255,7 @@ def post_answer(request):
                           question=question_time,
                           text= post_time)
         post_time_answer.save()
-        spreadsheet_updater.add_answer(str(post_time), question_time.id, respondent.spreadsheet_row)
+     #   spreadsheet_updater.add_answer(str(post_time), question_time.id, respondent.spreadsheet_row)
         if "Like" in request.COOKIES:
             text_like = request.COOKIES["Like"]
         else:
